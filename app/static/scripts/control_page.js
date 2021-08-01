@@ -24,41 +24,18 @@ function toggle_rules(){
 
 function show_answer(){
     answer_panel_text = document.getElementsByClassName("answer_panel_text")[0];
-    answer_panel_text.style.display = "block"
+    if(answer_panel_text.classList.contains("panel_hidden_text")){
+        answer_panel_text.classList.remove("panel_hidden_text")
+    }
 }
 
 //Round
 
-function select_round_as_won(playerID, originScore_0, originScore_1){
-    round_player_button_0 = document.getElementsByClassName("round_player_button_0")[0];
-    round_score_player_0 = document.getElementsByClassName("round_score_player_0")[0];
-    round_player_button_1 = document.getElementsByClassName("round_player_button_1")[0];
-    round_score_player_1 = document.getElementsByClassName("round_score_player_1")[0];
-
-    if(round_player_button_0.classList.contains("winner_player_button")){
-        round_player_button_0.classList.remove("winner_player_button")
-    }
-    if(round_player_button_0.classList.contains("looser_player_button")){
-        round_player_button_0.classList.remove("looser_player_button")
-    }
-    if(round_player_button_1.classList.contains("winner_player_button")){
-        round_player_button_1.classList.remove("winner_player_button")
-    }
-    if(round_player_button_1.classList.contains("looser_player_button")){
-        round_player_button_1.classList.remove("looser_player_button")
-    }
-
-    if(playerID === 0){
-        round_player_button_0.classList.add("winner_player_button")
-        round_player_button_1.classList.add("looser_player_button")
-        round_score_player_0.innerHTML = originScore_0+1
-        round_score_player_1.innerHTML = originScore_1
-    }else {
-        round_player_button_0.classList.add("looser_player_button")
-        round_player_button_1.classList.add("winner_player_button")
-        round_score_player_0.innerHTML = originScore_0
-        round_score_player_1.innerHTML = originScore_1+1
-    }
+function select_round_as_won(gameID, roundID, playerID, originScore_0, originScore_1){
+    var input = document.createElement("input");
+    input.value = '{"method": "cahage_round_winner", "player": ' + playerID + ', "game": ' +gameID + ', "round": ' + roundID + '}';
+    input.name = "return_value"
+    document.getElementsByClassName("round_score")[0].appendChild(input)
 }
 
 
@@ -66,33 +43,10 @@ function select_round_as_won(playerID, originScore_0, originScore_1){
 //Scoring
 
 function select_game_as_won(playerNr, gameID) {
-    otherPlayer = 0
-    if(playerNr === 0){
-        otherPlayer = 1
-    }else{
-        otherPlayer = 0
-    }
-    playerButton = document.getElementsByClassName('button_player_' + playerNr + '_' + gameID)[0];
-    opnentPlayerButton = document.getElementsByClassName('button_player_' + otherPlayer + '_' + gameID)[0];
-
-    if(playerButton.classList.contains("selected_game_button")){
-        playerButton.classList.remove("selected_game_button");
-        opnentPlayerButton.classList.remove("deselected_game_button");
-        get_games_score()
-        return
-    }
-
-    if(!playerButton.classList.contains("selected_game_button")){
-        if(playerButton.classList.contains("deselected_game_button")){
-            playerButton.classList.remove("deselected_game_button");
-        }
-        playerButton.classList.add("selected_game_button");
-    }
-    if(opnentPlayerButton.classList.contains("selected_game_button")){
-        opnentPlayerButton.classList.remove("selected_game_button");
-    }
-    opnentPlayerButton.classList.add("deselected_game_button");
-    get_games_score()
+    var input = document.createElement("input");
+    input.value = '{"method": "cahage_game_winner", "player": ' + playerNr + ', "game": ' +gameID + '}';
+    input.name = "return_value"
+    document.getElementsByClassName("score")[0].appendChild(input)
 
 }
 
@@ -154,7 +108,8 @@ function reset_gamescore(){
 }
 
 function inc_bonus(player, ammound){
-    bonus_ammount_field = document.getElementsByClassName('bonus_ammount_' + player)[0]
-    bonus_ammount_field.textContent = parseInt(bonus_ammount_field.textContent) + ammound
-    get_games_score()
+    var input = document.createElement("input");
+    input.value = '{"method": "addBonus", "player": ' + player + ', "bonus": ' +ammound + '}';
+    input.name = "return_value"
+    document.getElementsByClassName("score")[0].appendChild(input)
 }

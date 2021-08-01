@@ -46,11 +46,15 @@ body{
     margin: var(--standard_margin);
 }
 .panel_text{
-    display: none;
     margin: var(--standard_margin);
 }
 .answer_panel_text,
 .panel_shown_text{
+    font-size: var(--small_font);
+    margin: var(--standard_margin);
+}
+.panel_hidden_text{
+    display: none;
     font-size: var(--small_font);
     margin: var(--standard_margin);
 }
@@ -59,6 +63,14 @@ body{
     flex-wrap: wrap;
     justify-content: space-between;
     margin: var(--standard_margin);
+}
+.win_left{
+    background: rgb(31,30,31);
+    background: linear-gradient(270deg, rgba(31,30,31,1) 46%, rgba(39,50,37,1) 61%, rgba(48,70,44,1) 75%, rgba(56,88,50,1) 85%, rgba(69,120,60,1) 94%, rgba(96,183,80,1) 100%);
+}
+.win_right{
+    background: rgb(31,30,31);
+    background: linear-gradient(90deg, rgba(31,30,31,1) 46%, rgba(39,50,37,1) 61%, rgba(48,70,44,1) 75%, rgba(56,88,50,1) 85%, rgba(69,120,60,1) 94%, rgba(96,183,80,1) 100%);
 }
 .row{
     font-size: var(--small_font);
