@@ -119,13 +119,13 @@
                     {% endfor %}
                 </div>
                 <div class="row">
-                    <button class="minus_bonus">-</button>
-                    <a class="round_number">0</a>
-                    <button class="plus_bonus">+</button>
+                    <button onclick="inc_bonus(0, -1)" class="minus_bonus_0">-</button>
+                    <a class="bonus_score bonus_ammount_0">0</a>
+                    <button onclick="inc_bonus(0, 1)" class="plus_bonus_0">+</button>
                 </div>
             </div>
             <div class="row">
-                <button class="reset_score_button">Reset</button>
+                <button onclick="reset_gamescore()" class="reset_score_button">Reset</button>
             </div>
             <div class="score_player">
                 <div class="score_sum_player1">0</div>
@@ -137,9 +137,9 @@
                     {% endfor %}
                 </div>
                 <div class="row">
-                    <button class="minus_bonus">-</button>
-                    <a class="round_number">0</a>
-                    <button class="plus_bonus">+</button>
+                    <button onclick="inc_bonus(1, -1)" class="minus_bonus_1">-</button>
+                    <a class="bonus_score bonus_ammount_1">0</a>
+                    <button onclick="inc_bonus(1, 1)" class="plus_bonus_1">+</button>
                 </div>
             </div>
         </div>
