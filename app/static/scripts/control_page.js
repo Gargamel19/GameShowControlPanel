@@ -7,15 +7,26 @@ function select_game_as_won(playerNr, gameID) {
         otherPlayer = 0
     }
     console.log(otherPlayer + "" + gameID)
-    classListPlayer = document.getElementsByClassName('button_player_' + playerNr + '_' + gameID)[0].classList;
+    playerButton = document.getElementsByClassName('button_player_' + playerNr + '_' + gameID)[0];
+    opnentPlayerButton = document.getElementsByClassName('button_player_' + otherPlayer + '_' + gameID)[0];
 
-    if(!classListPlayer.contains("selected_game_button")){
-        document.getElementsByClassName('button_player_' + playerNr + '_' + gameID)[0].classList.add("selected_game_button");
+    if(playerButton.classList.contains("selected_game_button")){
+        playerButton.classList.remove("selected_game_button");
+        opnentPlayerButton.classList.remove("deselected_game_button");
+        get_games_score()
+        return
     }
-    classListOponentPlayer = document.getElementsByClassName('button_player_' + otherPlayer + '_' + gameID)[0].classList;
-    if(classListPlayer.contains("selected_game_button")){
-        document.getElementsByClassName('button_player_' + otherPlayer + '_' + gameID)[0].classList.remove("selected_game_button");
+
+    if(!playerButton.classList.contains("selected_game_button")){
+        if(playerButton.classList.contains("deselected_game_button")){
+            playerButton.classList.remove("deselected_game_button");
+        }
+        playerButton.classList.add("selected_game_button");
     }
+    if(opnentPlayerButton.classList.contains("selected_game_button")){
+        opnentPlayerButton.classList.remove("selected_game_button");
+    }
+    opnentPlayerButton.classList.add("deselected_game_button");
     get_games_score()
 
 }

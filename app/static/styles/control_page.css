@@ -86,7 +86,11 @@ button:active {
 }
 .selected_game_button {
     background: rgb(255,00,00);
-    background: linear-gradient(0deg, rgba(255,00,00,1) 0%, rgba(39,39,39,1) 100%);
+    background: linear-gradient(0deg, rgba(00,255,00,1) 0%, rgba(39,39,39,1) 100%);
+}
+.deselected_game_button {
+    background: rgb(00,00,00);
+    background: linear-gradient(0deg, rgba(00,00,00,1) 0%, rgba(39,39,39,1) 100%);
 }
 .games{
     width: 150px;
