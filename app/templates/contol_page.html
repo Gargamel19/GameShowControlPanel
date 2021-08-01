@@ -4,34 +4,42 @@
 <script src="{{ url_for('static', filename='scripts/control_page.js') }}"></script>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ titel }}</title>
 </head>
 <body>
 <div class="outer_class">
     <header>
-        <div class="game_title">Titel</div>
+        <div class="game_title">{{ titel }}</div>
         <div class="game_control">
+            {% if gameID > 0 %}
+            <button onclick="location.href='/{{gameID-1}}/round/0'" class="minus_game">-</button>
+            {% else %}
             <button class="minus_game">-</button>
-            <a class="game_number">10</a>
-            <button class="plus_game">+</button>
+            {% endif %}
+            <a class="game_number">{{gameID+1}}</a>
+            <button onclick="location.href='/{{gameID+1}}/round/0'" class="plus_game">+</button>
         </div>
     </header>
     <div id="header_spacer">
     </div>
-    <div class="panel beschreibung">
+    <div onclick="toggle_desc()" class="panel beschreibung">
         <div class="panel_titel">
             Beschreibung
         </div>
-        <div class="panel_text">
-            lorem ipsum
+        <div class="panel_text description_panel_text">
+            {% for line in desc %}
+                {{ line }} <br>
+            {% endfor %}
         </div>
     </div>
-    <div class="panel regeln">
+    <div onclick="toggle_rules()" class="panel regeln">
         <div class="panel_titel">
             Regeln
         </div>
-        <div class="panel_text">
-            lorem ipsum
+        <div class="panel_text rules_panel_text">
+            {% for rule in rules %}
+                {{ rule }} <br>
+            {% endfor %}
         </div>
     </div>
     <div class="panel stopwatch">
@@ -69,42 +77,59 @@
         </div>
         <p class="timer">00:00:00</p>
     </div>
+    {% if frage|length > 0%}
     <div class="panel frage">
         <div class="panel_titel">
             Frage
         </div>
         <div class="panel_shown_text">
-            Wie heißt der griechische Sonnengott?<br>
-            Lorem ipsum<br>
-            Lorem ipsum
+            <h3>{{frage[0]}}</h3>
+            {% for antwort in frage[1] %}
+                {{ antwort }}  <br>
+            {% endfor %}
         </div>
-        <button class="row">Antwort</button>
-        <div class="panel_shown_text">
-            Helios<br>
-            Lorem ipsum<br>
-            Lorem ipsum
+        <button onclick="show_answer()" class="row">Antwort</button>
+        <div class="panel_text answer_panel_text">
+            {{ frage[1][frage[2]] }}
         </div>
     </div>
+    {% endif %}
 
     <div class="panel runde">
         <div class="head">
             <div class="round_title">Runde</div>
             <div class="row score_runde">
-                <div class="round_score_player1">0</div>
+                <div class="round_score_player_0">{{round_score_0}}</div>
                 <div style="margin-left: 5px; margin-right: 5px"> - </div>
-                <div class="round_score_player2">0</div>
+                <div class="round_score_player_1">{{round_score_1}}</div>
             </div>
             <div class="round_control">
+                {% if roundID > 0 %}
+                <button onclick="location.href='/{{gameID}}/round/{{roundID-1}}'" class="minus_round">-</button>
+                {% else %}
                 <button class="minus_round">-</button>
-                <a class="round_number">0</a>
-                <button class="plus_round">+</button>
+                {% endif %}
+                <a class="round_number">{{roundID+1}}</a>
+                <button onclick="location.href='/{{gameID}}/round/{{roundID+1}}'" class="plus_round">+</button>
             </div>
         </div>
 
         <div class="row">
-            <button>Player1</button>
-            <div>Punkt für</div>
-            <button>Player2</button>
+            {% if winner == 0 %}
+                <button onclick="select_round_as_won(0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 winner_player_button">Player1</button>
+                <div>Punkt für</div>
+                <button onclick="select_round_as_won(1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 looser_player_button">Player2</button>
+            {% elif winner == 1  %}
+                <button onclick="select_round_as_won(0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 looser_player_button">Player1</button>
+                <div>Punkt für</div>
+                <button onclick="select_round_as_won(1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 winner_player_button">Player2</button>
+            {% else %}
+                <button onclick="select_round_as_won(0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0">Player1</button>
+                <div>Punkt für</div>
+                <button onclick="select_round_as_won(1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1">Player2</button>
+            {% endif %}
+
+
         </div>
     </div>
     <div class="panel score">

@@ -1,3 +1,70 @@
+//Description
+
+function toggle_desc(){
+    description_panel_text = document.getElementsByClassName("description_panel_text")[0];
+    if(description_panel_text.style.display === "none" || description_panel_text.style.display === ""){
+        description_panel_text.style.display = "block"
+    }else if(description_panel_text.style.display === "block"){
+        description_panel_text.style.display = "none"
+    }
+}
+
+function toggle_rules(){
+    rules_panel_text = document.getElementsByClassName("rules_panel_text")[0];
+    if(rules_panel_text.style.display === "none" || rules_panel_text.style.display === ""){
+        rules_panel_text.style.display = "block"
+    }else if(rules_panel_text.style.display === "block"){
+        rules_panel_text.style.display = "none"
+    }
+}
+
+
+
+//Frage
+
+function show_answer(){
+    answer_panel_text = document.getElementsByClassName("answer_panel_text")[0];
+    answer_panel_text.style.display = "block"
+}
+
+//Round
+
+function select_round_as_won(playerID, originScore_0, originScore_1){
+    round_player_button_0 = document.getElementsByClassName("round_player_button_0")[0];
+    round_score_player_0 = document.getElementsByClassName("round_score_player_0")[0];
+    round_player_button_1 = document.getElementsByClassName("round_player_button_1")[0];
+    round_score_player_1 = document.getElementsByClassName("round_score_player_1")[0];
+
+    if(round_player_button_0.classList.contains("winner_player_button")){
+        round_player_button_0.classList.remove("winner_player_button")
+    }
+    if(round_player_button_0.classList.contains("looser_player_button")){
+        round_player_button_0.classList.remove("looser_player_button")
+    }
+    if(round_player_button_1.classList.contains("winner_player_button")){
+        round_player_button_1.classList.remove("winner_player_button")
+    }
+    if(round_player_button_1.classList.contains("looser_player_button")){
+        round_player_button_1.classList.remove("looser_player_button")
+    }
+
+    if(playerID === 0){
+        round_player_button_0.classList.add("winner_player_button")
+        round_player_button_1.classList.add("looser_player_button")
+        round_score_player_0.innerHTML = originScore_0+1
+        round_score_player_1.innerHTML = originScore_1
+    }else {
+        round_player_button_0.classList.add("looser_player_button")
+        round_player_button_1.classList.add("winner_player_button")
+        round_score_player_0.innerHTML = originScore_0
+        round_score_player_1.innerHTML = originScore_1+1
+    }
+}
+
+
+
+//Scoring
+
 function select_game_as_won(playerNr, gameID) {
     otherPlayer = 0
     if(playerNr === 0){
