@@ -1,0 +1,22 @@
+.card{
+    background-color: midnightblue;
+    height: 20%;
+    width: 100%;
+    border-style: solid;
+    border-color: darkslateblue;
+    margin: 2%;
+    border-radius: 3%;
+    color: antiquewhite;
+}
+
+.description_box{
+    margin: 1em;
+}
+
+.rules_box{
+    margin: 1em;
+}
+
+.title{
+    text-align: center;
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/controll_page.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="outer_class">
+    <header>
+        <div class="game_title">Titel</div>
+        <div class="game_controll">
+            <button class="minus_game">-</button>
+            <a class="game_number">10</a>
+            <button class="plus_game">+</button>
+        </div>
+    </header>
+    <div class="panel beschreibung">
+        <div class="panel_titel">
+            Beschreibung
+        </div>
+        <div class="panel_text">
+            lorem ipsum
+        </div>
+    </div>
+    <div class="panel regeln">
+        <div class="panel_titel">
+            Regeln
+        </div>
+        <div class="panel_text">
+            lorem ipsum
+        </div>
+    </div>
+    <div class="panel stopwatch">
+        <div class="head">
+            <div>Player1</div>
+            <button>Reset</button>
+            <div>Player2</div>
+        </div>
+        <div class="countdown row">
+            <div style="width: 25%; float: left">
+                <div>Countdown</div>
+            </div>
+            <div style="width: 25%">
+                <input value="...">
+            </div>
+            <div style="width: 25%;">
+                <button style="float: right">Start</button>
+            </div>
+            <div style="width: 25%">
+                <button style="float: right">Reset</button>
+            </div>
+        </div>
+        <div class="stopwatch row">
+            <div style="width: 25%; float: left">
+                <div>Stopwatch</div>
+            </div>
+            <div style="width: 25%">
+            </div>
+            <div style="width: 25%;">
+                <button style="float: right">Start</button>
+            </div>
+            <div style="width: 25%">
+                <button style="float: right">Reset</button>
+            </div>
+        </div>
+        <p class="timer">00:00:00</p>
+    </div>
+    <div class="panel frage">
+        <div class="panel_titel">
+            Frage
+        </div>
+        <div class="panel_shown_text">
+            Wie heißt der griechische Sonnengott?<br>
+            Lorem ipsum<br>
+            Lorem ipsum
+        </div>
+        <button class="row">Antwort</button>
+        <div class="panel_shown_text">
+            Helios<br>
+            Lorem ipsum<br>
+            Lorem ipsum
+        </div>
+    </div>
+
+    <div class="panel runde">
+        <div class="head">
+            <div class="round_title">Runde</div>
+            <div class="round_controll">
+                <button class="minus_round">-</button>
+                <a class="round_number">10</a>
+                <button class="plus_round">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <button>Player1</button>
+            <div>Punkt für</div>
+            <button>Player2</button>
+        </div>
+    </div>
+    <div class="panel score">
+        <div class="row">
+            <div class="score_player">
+                <div class="score_sum">0</div>
+                <div class="games">
+                    {% for i in range(15) %}
+                    <button class="game_button">
+                        {{ i + 1 }}
+                    </button>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <button class="minus_bonus">-</button>
+                    <a class="round_number">0</a>
+                    <button class="plus_bonus">+</button>
+                </div>
+            </div>
+            <div class="row">
+                <button class="reset_score_button">Reset</button>
+            </div>
+            <div class="score_player">
+                <div class="score_sum">0</div>
+                <div class="games">
+                    {% for i in range(15) %}
+                    <button class="game_button">
+                        {{ i + 1 }}
+                    </button>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <button class="minus_bonus">-</button>
+                    <a class="round_number">0</a>
+                    <button class="plus_bonus">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
