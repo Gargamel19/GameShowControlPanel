@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/controll_page.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/control_page.css') }}">
+<script src="{{ url_for('static', filename='scripts/control_page.js') }}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,7 +10,7 @@
 <div class="outer_class">
     <header>
         <div class="game_title">Titel</div>
-        <div class="game_controll">
+        <div class="game_control">
             <button class="minus_game">-</button>
             <a class="game_number">10</a>
             <button class="plus_game">+</button>
@@ -86,9 +87,14 @@
     <div class="panel runde">
         <div class="head">
             <div class="round_title">Runde</div>
-            <div class="round_controll">
+            <div class="row score_runde">
+                <div class="round_score_player1">0</div>
+                <div style="margin-left: 5px; margin-right: 5px"> - </div>
+                <div class="round_score_player2">0</div>
+            </div>
+            <div class="round_control">
                 <button class="minus_round">-</button>
-                <a class="round_number">10</a>
+                <a class="round_number">0</a>
                 <button class="plus_round">+</button>
             </div>
         </div>
@@ -102,10 +108,10 @@
     <div class="panel score">
         <div class="row">
             <div class="score_player">
-                <div class="score_sum">0</div>
+                <div class="score_sum_player0">0</div>
                 <div class="games">
                     {% for i in range(15) %}
-                    <button class="game_button">
+                    <button onclick="select_game_as_won(0, {{ i }})" class="game_button button_player_0_{{ i }}">
                         {{ i + 1 }}
                     </button>
                     {% endfor %}
@@ -120,10 +126,10 @@
                 <button class="reset_score_button">Reset</button>
             </div>
             <div class="score_player">
-                <div class="score_sum">0</div>
+                <div class="score_sum_player1">0</div>
                 <div class="games">
                     {% for i in range(15) %}
-                    <button class="game_button">
+                    <button onclick="select_game_as_won(1, {{ i }})" class="game_button button_player_1_{{ i }}">
                         {{ i + 1 }}
                     </button>
                     {% endfor %}

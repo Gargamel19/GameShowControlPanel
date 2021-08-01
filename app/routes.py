@@ -19,4 +19,4 @@ def game(gameID):
 
 @app.route('/')
 def index():
-    return render_template('contoll_page.html', title='Game')
+    return render_template('contol_page.html', title='Game')

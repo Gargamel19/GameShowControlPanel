@@ -17,7 +17,7 @@ body{
 .game_title{
     float: left;
 }
-.game_controll{
+.game_control{
     float: right;
 }
 .panel{
@@ -81,8 +81,12 @@ button:hover {
     color: white;
 }
 button:active {
-    background: rgb(29,29,29);
-    background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(39,39,39,1) 100%);
+    background: rgb(29, 29, 29);
+    background: linear-gradient(0deg, rgba(29, 29, 29, 1) 0%, rgba(39, 39, 39, 1) 100%);
+}
+.selected_game_button {
+    background: rgb(255,00,00);
+    background: linear-gradient(0deg, rgba(255,00,00,1) 0%, rgba(39,39,39,1) 100%);
 }
 .games{
     width: 150px;
@@ -102,4 +106,7 @@ button:active {
     height: 20px;
     bottom:0;
     vertical-align: bottom;
+}
+.score_runde{
+    font-size: var(--big_font);
 }
