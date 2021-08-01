@@ -31,10 +31,11 @@ function show_answer(){
 
 //Round
 
-function select_round_as_won(gameID, roundID, playerID, originScore_0, originScore_1){
+function select_round_as_won(gameID, roundID, playerID){
     var input = document.createElement("input");
     input.value = '{"method": "cahage_round_winner", "player": ' + playerID + ', "game": ' +gameID + ', "round": ' + roundID + '}';
     input.name = "return_value"
+    input.style.display = "none"
     document.getElementsByClassName("round_score")[0].appendChild(input)
 }
 
@@ -46,6 +47,7 @@ function select_game_as_won(playerNr, gameID) {
     var input = document.createElement("input");
     input.value = '{"method": "cahage_game_winner", "player": ' + playerNr + ', "game": ' +gameID + '}';
     input.name = "return_value"
+    input.style.display = "none"
     document.getElementsByClassName("score")[0].appendChild(input)
 
 }
@@ -111,5 +113,6 @@ function inc_bonus(player, ammound){
     var input = document.createElement("input");
     input.value = '{"method": "addBonus", "player": ' + player + ', "bonus": ' +ammound + '}';
     input.name = "return_value"
+    input.style.display = "none"
     document.getElementsByClassName("score")[0].appendChild(input)
 }
