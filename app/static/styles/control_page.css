@@ -1,18 +1,29 @@
 :root {
-    --big_font: 20pt;
-    --small_font: 10pt;
-    --standard_margin: 10px;
+    --big_font: 18px;
+    --medium_font: 15px;
+    --small_font: 12px;
+    --standard_margin: 6px;
+    --header_size: 28px;
 }
 
 
 header{
-    height: 45px;
-    margin: var(--standard_margin);
+    position:fixed;
+    width: 100%;
+    height: var(--header_size);
+    padding: var(--standard_margin);
+    border-bottom: 1px solid #707070;
+    background-color: #1f1e1f;
+}
+#header_spacer {
+    height: calc(var(--header_size) + 2*var(--standard_margin));
 }
 body{
     color: #d2d2d2;
+    margin: 0;
     background-color: #1f1e1f;
     font-size: var(--big_font);
+    font-family: "Segoe UI";
 }
 .game_title{
     float: left;
@@ -53,21 +64,38 @@ body{
     margin: var(--standard_margin);
 }
 
+input[type=text]{
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: rgb(29,29,29);
+    background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(39,39,39,1) 100%);
+    border: 1px solid #707070;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
 .countdown{
 }
+
 .timer{
     text-align: center;
 }
+
 .minus_game{
     height: 1.5em;
     width: 1.5em;
     margin: 0;
 }
+
 .plus_game{
     height: 1.5em;
     width: 1.5em;
     margin: 0;
+
 }
+
 button{
     background: rgb(61,61,61);
     background: linear-gradient(0deg, rgba(61,61,61,1) 0%, rgba(38,38,38,1) 100%);

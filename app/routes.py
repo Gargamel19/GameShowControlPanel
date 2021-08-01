@@ -3,7 +3,7 @@ from flask import render_template
 from app import app
 from app.utils import Werkzeuge
 
-baseDir = "C:\\Users\\acf040\\Downloads\\Data\\Data"
+baseDir = "D:\\Projects\\GameshowGames\\Data"
 player = Werkzeuge.load_player(baseDir)
 
 @app.route('/show')
