@@ -3,10 +3,10 @@ import json
 from flask import render_template, redirect, url_for, request
 
 from app import app
+from app.Models.Show import Show
 from app.utils import Werkzeuge
 
 baseDir = "D:\\Projects\\GameshowGames\\Data"
-player = Werkzeuge.load_player(baseDir)
 
 @app.route('/show')
 def show():
@@ -23,6 +23,7 @@ def game(gameID, roundID):
     roundID_int = int(roundID)
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
     show, game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, gameID_int)
+    Werkzeuge.write_to_dir_structure(baseDir, show)
 
     if len(rounds_list) <= 0:
         frage = []
@@ -78,6 +79,7 @@ def game(gameID, roundID):
 @app.route('/<gameID>/round/<roundID>', methods=['POST'])
 def game_post(gameID, roundID):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
+    show = Show.readFromJson(show_json)
     print("Button has been pressed")
     for key in request.form.keys():
         print(key)
@@ -100,4 +102,5 @@ def game_post(gameID, roundID):
             show_json["bonusPlayerGuest"] += return_json["bonus"]
 
     Werkzeuge.save_show(baseDir, "GameShow1.json", show_json)
+    Werkzeuge.write_to_dir_structure(baseDir, show)
     return redirect(url_for('game', gameID=gameID, roundID=roundID))

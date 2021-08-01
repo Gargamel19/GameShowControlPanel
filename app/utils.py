@@ -103,3 +103,100 @@ class Werkzeuge:
         return player
 
 
+    @staticmethod
+    def write_to_dir_structure(base_dir, show):
+
+        # write name home
+        Werkzeuge.write_line_to_file(base_dir, "Name_Home.txt", show.playerHome)
+
+        # write name guest
+        Werkzeuge.write_line_to_file(base_dir, "Name_Guest.txt", show.playerGuest)
+
+        # create Games dir
+        games_dir = join(base_dir, "Games")
+        if not os.path.isdir(games_dir):
+            os.mkdir(games_dir)
+
+        # create Score dir
+        score_dir = join(base_dir, "Score")
+        if not os.path.isdir(score_dir):
+            os.mkdir(score_dir)
+
+        score_Home = show.bonusPlayerHome
+        score_Guest = show.bonusPlayerGuest
+
+        for x in range(len(show.games)):
+            # create "Game x" dir
+            game_dir = join(games_dir, "Game " + str(x))
+            if not os.path.isdir(game_dir):
+                os.mkdir(game_dir)
+            score_game_dir = join(score_dir, "Game " + str(x))
+            if not os.path.isdir(score_game_dir):
+                os.mkdir(score_game_dir)
+
+            # title
+            Werkzeuge.write_line_to_file(game_dir, "Title.txt", show.games[x].title)
+
+            # description
+            Werkzeuge.write_lines_to_file(game_dir, "Description.txt", show.games[x].description)
+
+            # rules
+            Werkzeuge.write_lines_to_file(game_dir, "Rules.txt", show.games[x].rules)
+
+            # Compute Score
+            if show.games[x].winner == 0:
+                score_Home += x+1
+            elif show.games[x].winner == 1:
+                score_Guest += x+1
+
+            # Compute Round Score
+            round_score_home = 0
+            round_score_home_str = ""
+            round_score_guest = 0
+            round_score_guest_str = ""
+            for round in show.games[x].rounds:
+                if round.winner == 0:
+                    round_score_home += 1
+                    round_score_home_str += "x "
+                    round_score_guest_str += "o "
+                elif round.winner == 1:
+                    round_score_guest += 1
+                    round_score_home_str += "o "
+                    round_score_guest_str += "x "
+                else:
+                    round_score_home_str += "o "
+                    round_score_guest_str += "o "
+
+
+
+            Werkzeuge.write_line_to_file(score_game_dir, "Points.txt", str(round_score_home) + " : " + str(round_score_guest))
+            Werkzeuge.write_line_to_file(score_game_dir, "Points_Home.txt", str(round_score_home))
+            Werkzeuge.write_line_to_file(score_game_dir, "Points_Guest.txt", str(round_score_guest))
+
+            Werkzeuge.write_line_to_file(score_game_dir, "Points_Home_Display.txt", str(round_score_home_str))
+            Werkzeuge.write_line_to_file(score_game_dir, "Points_Guest_Display.txt", str(round_score_guest_str))
+
+            if round_score_home>round_score_guest:
+                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerHome)
+            elif round_score_home<round_score_guest:
+                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerGuest)
+
+        # score home player
+        Werkzeuge.write_line_to_file(score_dir, "Score_Home.txt", str(score_Home))
+
+        # score guest player
+        Werkzeuge.write_line_to_file(score_dir, "Score_Guest.txt", str(score_Guest))
+
+
+
+    @staticmethod
+    def write_line_to_file(dir, file, content):
+        file_path = join(dir, file)
+        with open(file_path, 'w') as f:
+            f.write(content)
+
+    @staticmethod
+    def write_lines_to_file(dir, file, content):
+        file_path = join(dir, file)
+        with open(file_path, 'w') as f:
+            f.writelines(content)
