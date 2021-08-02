@@ -67,8 +67,6 @@ def game(gameID, roundID):
         elif game_dummy.winner == 1:
             win_list[0].append(-1)
             win_list[1].append(1)
-    print(game.stopwatch_enabled)
-    print(game.countdown_enabled)
     return render_template('contol_page.html', title='Game', gameID=gameID_int,
                             roundID=roundID_int, titel=game.title, desc=game.description, rules=game.rules,
                             game_score_0=game_score_0, game_score_1=game_score_1, round_score_0=round_score_0,
@@ -83,9 +81,6 @@ def game(gameID, roundID):
 def game_post(gameID, roundID):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
     show = Show.readFromJson(show_json)
-    print("Button has been pressed")
-    for key in request.form.keys():
-        print(key)
     return_json = json.loads(request.form["return_value"])
     if return_json["method"] == "cahage_game_winner":
         if show_json["games"][return_json["game"]]["winner"] == return_json["player"]:
@@ -93,7 +88,6 @@ def game_post(gameID, roundID):
         else:
             show_json["games"][return_json["game"]]["winner"] = return_json["player"]
     if return_json["method"] == "cahage_round_winner":
-        print(return_json)
         if show_json["games"][return_json["game"]]["Rounds"][return_json["round"]]["winner"] == return_json["player"]:
             show_json["games"][return_json["game"]]["Rounds"][return_json["round"]]["winner"] = -1
         else:
