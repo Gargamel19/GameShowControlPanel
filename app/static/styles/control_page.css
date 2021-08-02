@@ -48,6 +48,8 @@ body{
 .panel_text{
     margin: var(--standard_margin);
 }
+
+.panel_sub_text,
 .answer_panel_text,
 .panel_shown_text{
     font-size: var(--small_font);

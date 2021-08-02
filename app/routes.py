@@ -1,3 +1,4 @@
+import configparser
 import json
 
 from flask import render_template, redirect, url_for, request
@@ -6,7 +7,9 @@ from app import app
 from app.Models.Show import Show
 from app.utils import Werkzeuge
 
-baseDir = "D:\\Projects\\GameshowData"
+config = configparser.ConfigParser()
+config.read('.config')
+baseDir = config['DEFAULT']["baseDir"]
 
 @app.route('/show')
 def show():
