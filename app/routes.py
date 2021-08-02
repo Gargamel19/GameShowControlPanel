@@ -6,7 +6,7 @@ from app import app
 from app.Models.Show import Show
 from app.utils import Werkzeuge
 
-baseDir = "D:\\Projects\\GameshowGames\\Data"
+baseDir = "D:\\Projects\\GameshowData"
 
 @app.route('/show')
 def show():
