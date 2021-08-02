@@ -11,14 +11,17 @@ config = configparser.ConfigParser()
 config.read('.config')
 baseDir = config['DEFAULT']["baseDir"]
 
+
 @app.route('/show')
 def show():
     games = Werkzeuge.load_games(baseDir)
     return render_template('show.html', title='Show', game_list=games)
 
+
 @app.route('/')
 def index():
     return redirect(url_for('game', gameID=0, roundID=0))
+
 
 @app.route('/<gameID>/round/<roundID>', methods=['GET'])
 def game(gameID, roundID):
