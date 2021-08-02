@@ -92,21 +92,23 @@
             {% endif %}
         </div>
         {% if frage|length > 0%}
-        <div class="panel frage">
-            <div class="panel_titel">
-                Frage
-            </div>
-            <div class="panel_shown_text">
-                <h3>{{frage[1]}}</h3>
-                {% for antwort in frage[2] %}
-                    {{ antwort }}  <br>
-                {% endfor %}
-            </div>
-            <button onclick="show_answer()" class="row">Antwort</button>
-            <div class="panel_text answer_panel_text panel_hidden_text">
-                {{ frage[2][frage[3]] }}
-            </div>
-        </div>
+            {% if frage|length > 1%}
+                <div class="panel frage">
+                    <div class="panel_titel">
+                        Frage
+                    </div>
+                    <div class="panel_shown_text">
+                        <h3>{{frage[1]}}</h3>
+                        {% for antwort in frage[2] %}
+                            {{ antwort }}  <br>
+                        {% endfor %}
+                    </div>
+                    <button onclick="show_answer()" class="row">Antwort</button>
+                    <div class="panel_text answer_panel_text panel_hidden_text">
+                        {{ frage[2][frage[3]] }}
+                    </div>
+                </div>
+            {% endif %}
         <div class="panel runde">
             {% if current_winning == -1 %}
             <div class="head">

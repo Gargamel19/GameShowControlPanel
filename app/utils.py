@@ -165,9 +165,7 @@ class Werkzeuge:
                     round_score_guest_str += "x "
                 else:
                     round_score_home_str += "o "
-                    round_score_guest_str += "o "
-
-
+                    round_score_guest_str += "x "
 
             Werkzeuge.write_line_to_file(score_game_dir, "Points.txt", str(round_score_home) + " : " + str(round_score_guest))
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Home.txt", str(round_score_home))
@@ -176,9 +174,9 @@ class Werkzeuge:
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Home_Display.txt", str(round_score_home_str))
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Guest_Display.txt", str(round_score_guest_str))
 
-            if round_score_home>round_score_guest:
+            if round_score_home > round_score_guest:
                 Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerHome)
-            elif round_score_home<round_score_guest:
+            elif round_score_home < round_score_guest:
                 Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerGuest)
 
         # score home player
