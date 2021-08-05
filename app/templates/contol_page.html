@@ -29,24 +29,20 @@
         </header>
         <div id="header_spacer">
         </div>
-        <div onclick="toggle_desc()" class="panel beschreibung">
-            <div class="panel_titel">
+        <div class="panel beschreibung">
+            <div class="panel_titel" onclick="toggle_desc()">
                 Beschreibung
             </div>
             <div class="panel_sub_text description_panel_text">
-                {% for line in desc %}
-                    {{ line }} <br>
-                {% endfor %}
+                <textarea class="description">{{ desc }}</textarea>
             </div>
         </div>
-        <div onclick="toggle_rules()" class="panel regeln">
-            <div class="panel_titel">
+        <div class="panel regeln">
+            <div class="panel_titel" onclick="toggle_rules()">
                 Regeln
             </div>
             <div class="panel_sub_text rules_panel_text">
-                {% for rule in rules %}
-                    {{ rule }} <br>
-                {% endfor %}
+                <textarea class="rules">{{ rules }}</textarea>
             </div>
         </div>
         <div class="panel stopwatch">
@@ -100,7 +96,11 @@
                     <div class="panel_shown_text">
                         <h3>{{frage[1]}}</h3>
                         {% for antwort in frage[2] %}
-                            {{ antwort }}  <br>
+                            {% if frage[2][frage[3]] == antwort %}
+                                <div style="height: 0em" class="right_answer">{{ antwort }}</div>  <br>
+                            {% else %}
+                                <div style="height: 0em">{{ antwort }}</div>  <br>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <button onclick="show_answer()" class="row">Antwort</button>
@@ -142,17 +142,17 @@
         <form method="post">
             <div class="row round_score">
                 {% if frage[0] == 0 %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 winner_player_button">Player1</button>
+                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 winner_player_button">{{ playerHome }}</button>
                     <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 looser_player_button">Player2</button>
+                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 looser_player_button">{{ playerGuest }}</button>
                 {% elif frage[0] == 1  %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 looser_player_button">Player1</button>
+                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 looser_player_button">{{ playerHome }}</button>
                     <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 winner_player_button">Player2</button>
+                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 winner_player_button">{{ playerGuest }}</button>
                 {% else %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0">Player1</button>
+                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0">{{ playerHome }}</button>
                     <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1">Player2</button>
+                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1">{{ playerGuest }}</button>
                 {% endif %}
             </div>
         </form>
@@ -219,6 +219,7 @@
                 </div>
             </div>
         </form>
+        <button onclick="location.href='/{{gameID}}/round/{{roundID}}/edit'" >edit</button>
     </div>
 </body>
 </html>

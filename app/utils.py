@@ -13,7 +13,7 @@ class Werkzeuge:
     def save_show(base_dir, game_show_name, show_json):
         games_dir = join(base_dir, game_show_name)
         with open(games_dir, "w+", encoding="utf-8") as file:
-            file.writelines(json.dumps(show_json))
+            file.writelines(json.dumps(show_json, indent=4, sort_keys=True))
 
 
     @staticmethod
@@ -31,18 +31,20 @@ class Werkzeuge:
     @staticmethod
     def get_rounds_as_list(questions_json, index):
         show = Show.readFromJson(questions_json)
-        game = show.games[index]
-        rounds = []
-        for round in game.rounds:
-            if type(round) is QuestionRound:
-                rounds.append([round.winner, round.question, round.content, round.correct])
-            else:
-                rounds.append([round.winner])
+
+        if len(show.games) == 0:
+            return show, show.games[index], []
+        else:
+            if index >= len(show.games):
+                index = len(show.games)-1
+            game = show.games[index]
+            rounds = []
+            for round in game.rounds:
+                if type(round) is QuestionRound:
+                    rounds.append([round.winner, round.question, round.content, round.correct])
+                else:
+                    rounds.append([round.winner])
         return show, game, rounds
-
-
-
-
 
     @staticmethod
     def load_games2(base_dir):

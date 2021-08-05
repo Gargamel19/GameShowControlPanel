@@ -4,8 +4,8 @@ from app.Models.Round import Round
 class Game:
 
     title = ""
-    description = []
-    rules = []
+    description = ""
+    rules = ""
     countdown_enabled = False
     countdown = 0
     stopwatch_enabled = False

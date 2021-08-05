@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/control_page_edit.css') }}">
+<script src="{{ url_for('static', filename='scripts/control_page_edit.js') }}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titel }}</title>
+</head>
+<body>
+
+    <div class="outer_class">
+
+        <header>
+            <div class="game_title"><input type="text" value="{{ titel}}"> </div>
+            <div class="game_control">
+
+                <a class="game_number">{{gameID+1}}</a>
+
+                <input type="text" class="amount_of_games" value="{{ game_amount }}">
+            </div>
+        </header>
+        <div id="header_spacer">
+        </div>
+        <div class="panel beschreibung">
+            <div class="panel_titel">
+                Beschreibung
+            </div>
+            <div class="panel_sub_text description_panel_text">
+                <textarea class="description">{{ desc }}</textarea>
+            </div>
+        </div>
+        <div class="panel regeln">
+            <div class="panel_titel">
+                Regeln
+            </div>
+            <div class="panel_sub_text rules_panel_text">
+                <textarea class="rules">{{ rules }}</textarea>
+            </div>
+        </div>
+        <div class="panel stopwatch">
+            <div class="head">
+                <input type="text" class="nameHome" value="{{playerHome}}">
+                <button>Reset</button>
+                <input type="text" class="nameGuest" value="{{playerGuest}}">
+            </div>
+
+            <div class="countdown row">
+                {% if countdown_enabled %}
+                    <div style="width: 50%; float: left; display: flex">
+                        <input class="countdown_cb" onclick="toggle_countdown_visibility(this)" type="checkbox" checked>
+                        <div>Countdown</div>
+                    </div>
+                    <div class="visible_countdown" style="width: 20%">
+                        <input class="countdown_value_input" type="text" value="{{countdown}}">
+                    </div>
+                    <div class="visible_countdown" style="width: 15%;">
+                        <button style="float: right">Start</button>
+                    </div>
+                    <div class="visible_countdown" style="width: 15%">
+                        <button style="float: right">Reset</button>
+                    </div>
+                {% else %}
+                    <div style="width: 50%; float: left; display: flex">
+                        <input class="countdown_cb" onclick="toggle_countdown_visibility(this)" type="checkbox">
+                        <div>Countdown</div>
+                    </div>
+                    <div class="visible_countdown" style="width: 20%; display: none">
+                        <input class="countdown_value_input" type="text" value="{{countdown}}">
+                    </div>
+                    <div class="visible_countdown" style="width: 15%; display: none">
+                        <button style="float: right">Start</button>
+                    </div>
+                    <div class="visible_countdown" style="width: 15%; display: none">
+                        <button style="float: right">Reset</button>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="stopwatch row">
+                {% if stopwatch_enabled %}
+                    <div style="width: 50%; float: left; display: flex">
+                        <input class="stopwatch_cb" onclick="toggle_stopwatch_visibility(this)" type="checkbox" checked>
+                        <div>Stopwatch</div>
+                    </div>
+                    <div style="width: 20%">
+                    </div>
+                    <div class="visible_stopwatch" style="width: 15%;">
+                        <button style="float: right">Start</button>
+                    </div>
+                    <div class="visible_stopwatch" style="width: 15%">
+                        <button style="float: right">Reset</button>
+                    </div>
+                {% else %}
+                    <div style="width: 50%; float: left; display: flex">
+                        <input class="stopwatch_cb" onclick="toggle_stopwatch_visibility(this)" type="checkbox">
+                        <div>Stopwatch</div>
+                    </div>
+                    <div style="width: 20%; display: none">
+                    </div>
+                    <div class="visible_stopwatch" style="width: 15%; display: none">
+                        <button style="float: right">Start</button>
+                    </div>
+                    <div class="visible_stopwatch" style="width: 15%; display: none">
+                        <button style="float: right">Reset</button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <p class="timer">00:00:00</p>
+        </div>
+        <div class="panel frage">
+            {% if noquestion %}
+                <div class="panel_titel show_when_question_switch" style="display: none">
+                    Frage
+
+                </div>
+                <div class="panel_shown_text show_when_question_switch" style="display: none">
+                    <input type="text" class="question" value="{{frage[1]}}"> <br>
+                    {% for x in range(frage[2]|length) %}
+                        <input type="text" class="answer_{{ x }}"  value="{{ frage[2][x] }} ">
+                        {% if frage[3] == x %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
+                        {% else %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
+                        {% endif %}
+                         <br>
+                    {% endfor %}
+                </div>
+                <div style="display: flex; margin: 6px;">
+                <input style="margin: 6px;" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch">
+            </div>
+            {% else %}
+                <div class="panel_titel show_when_question_switch">
+                    Frage
+
+                </div>
+                <div class="panel_shown_text show_when_question_switch">
+                    <input type="text" class="question" value="{{frage[1]}}"> <br>
+                    {% for x in range(frage[2]|length) %}
+                        <input type="text" class="answer_{{ x }}"  value="{{ frage[2][x] }} ">
+                        {% if frage[3] == x %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
+                        {% else %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
+                        {% endif %}
+                         <br>
+                    {% endfor %}
+                </div>
+                <div style="display: flex; margin: 6px;">
+                <input style="margin: 6px;" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch" checked>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+        <div class="panel runde">
+
+            {% if norounds %}
+
+                {% if current_winning == -1 %}
+                <div class="head show_when_rounds_switch" style="display: none">
+                {% elif current_winning == 0 %}
+                <div class="head win_left show_when_rounds_switch" style="display: none">
+                {% elif current_winning == 1 %}
+                <div class="head win_right show_when_rounds_switch" style="display: none">
+                {% endif %}
+                    <div class="round_title">Runde</div>
+                    <div class="row score_runde">
+                        <div class="round_score_player_0">{{round_score_0}}</div>
+                        <div style="margin-left: 5px; margin-right: 5px"> - </div>
+                        <div class="round_score_player_1">{{round_score_1}}</div>
+                    </div>
+                    <div class="round_control">
+
+                        <a class="round_number">{{roundID+1}}</a>
+
+                        <input type="text" class="amount_of_rounds" value="{{ round_amount }}">
+                    </div>
+                </div>
+
+                <div class="row round_score show_when_rounds_switch" style="display: none">
+                    {% if frage[0] == 0 %}
+                        <button name="0_won_round" class="round_player_button_0 winner_player_button">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1 looser_player_button">{{playerGuest}}</button>
+                    {% elif frage[0] == 1  %}
+                        <button name="0_won_round" class="round_player_button_0 looser_player_button">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1 winner_player_button">{{playerGuest}}</button>
+                    {% else %}
+                        <button name="0_won_round" class="round_player_button_0">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1">{{playerGuest}}</button>
+                    {% endif %}
+                </div>
+                <div style="display: flex; margin: 6px;">
+                    <input style="margin: 6px;" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
+                </div>
+            {% else %}
+                {% if current_winning == -1 %}
+                <div class="head show_when_rounds_switch">
+                {% elif current_winning == 0 %}
+                <div class="head win_left show_when_rounds_switch">
+                {% elif current_winning == 1 %}
+                <div class="head win_right show_when_rounds_switch">
+                {% endif %}
+                    <div class="round_title">Runde</div>
+                    <div class="row score_runde">
+                        <div class="round_score_player_0">{{round_score_0}}</div>
+                        <div style="margin-left: 5px; margin-right: 5px"> - </div>
+                        <div class="round_score_player_1">{{round_score_1}}</div>
+                    </div>
+                    <div class="round_control">
+
+                        <a class="round_number">{{roundID+1}}</a>
+
+                        <input type="text" class="amount_of_rounds" value="{{ round_amount }}">
+                    </div>
+                </div>
+
+                <div class="row round_score show_when_rounds_switch">
+                    {% if frage[0] == 0 %}
+                        <button name="0_won_round" class="round_player_button_0 winner_player_button">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1 looser_player_button">{{playerGuest}}</button>
+                    {% elif frage[0] == 1  %}
+                        <button name="0_won_round" class="round_player_button_0 looser_player_button">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1 winner_player_button">{{playerGuest}}</button>
+                    {% else %}
+                        <button name="0_won_round" class="round_player_button_0">{{playerHome}}</button>
+                        <div>Punkt für</div>
+                        <button name="1_won_round" class="round_player_button_1">{{playerGuest}}</button>
+                    {% endif %}
+                </div>
+                <div style="display: flex; margin: 6px;">
+                    <input style="margin: 6px;" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch" checked>
+                </div>
+            {% endif %}
+        </div>
+        <div class="panel score">
+            <div class="row">
+                <div class="score_player">
+                    <div class="score_sum_player0">{{game_score_0}}</div>
+                    <div class="games">
+                        {% for i in range(win_list[0]|length) %}
+
+                            {% if win_list[0][i] == 1 %}
+                                <button onclick="select_game_as_won(0, {{ i }})" class="game_button selected_game_button button_player_0_{{ i }}">
+                                    {{ i + 1 }}
+                                </button>
+                            {% elif win_list[0][i] == -1 %}
+                                <button onclick="select_game_as_won(0, {{ i }})" class="game_button deselected_game_button button_player_0_{{ i }}">
+                                    {{ i + 1 }}
+                                </button>
+                            {% elif win_list[0][i] == 0  %}
+                                <button onclick="select_game_as_won(0, {{ i }})" class="game_button button_player_0_{{ i }}">
+                                    {{ i + 1 }}
+                                </button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <button onclick="inc_bonus(0, -1)" class="minus_bonus_0">-</button>
+                        <a class="bonus_score bonus_ammount_0">{{bonusHome}}</a>
+                        <button onclick="inc_bonus(0, 1)" class="plus_bonus_0">+</button>
+                    </div>
+                </div>
+                <div style="display: none" class="row">
+                    <button onclick="reset_gamescore()" class="reset_score_button">Reset</button>
+                </div>
+                <div class="score_player">
+                    <div class="score_sum_player1">{{game_score_1}}</div>
+
+                        <div class="games">
+                            {% for i in range(win_list[0]|length) %}
+                                {% if win_list[1][i] == 1 %}
+                                    <button onclick="select_game_as_won(1, {{ i }})" class="game_button selected_game_button button_player_1_{{ i }}">
+                                        {{ i + 1 }}
+                                    </button>
+                                {% elif win_list[1][i] == -1 %}
+                                    <button onclick="select_game_as_won(1, {{ i }})" class="game_button deselected_game_button button_player_1_{{ i }}">
+                                        {{ i + 1 }}
+                                    </button>
+                                {% elif win_list[1][i] == 0  %}
+                                    <button onclick="select_game_as_won(1, {{ i }})" class="game_button button_player_1_{{ i }}">
+                                        {{ i + 1 }}
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    <div class="row">
+                        <button onclick="inc_bonus(1, -1)" class="minus_bonus_1">-</button>
+                        <a class="bonus_score bonus_ammount_1">{{bonusGuest}}</a>
+                        <button onclick="inc_bonus(1, 1)" class="plus_bonus_1">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="post">
+            <div class="panel save_button_div">
+                <button onclick="save_settings()" >save</button>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -19,13 +19,11 @@ function toggle_rules(){
 }
 
 //Frage
-
 function show_answer(){
-    answer_panel_text = document.getElementsByClassName("answer_panel_text")[0];
-    if(answer_panel_text.classList.contains("panel_hidden_text")){
-        answer_panel_text.classList.remove("panel_hidden_text")
-    }
+    answer_panel_text = document.getElementsByClassName("right_answer")[0];
+    answer_panel_text.style.color = "green"
 }
+
 
 //Round
 
