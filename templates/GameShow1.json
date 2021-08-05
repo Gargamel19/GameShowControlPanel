@@ -1,0 +1,233 @@
+{
+    "bonusPlayerGuest": 0,
+    "bonusPlayerHome": 0,
+    "games": [
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Questions": [
+                {
+                    "content": [
+                        "Jens Nowotny",
+                        "G\u00fcnther Grass",
+                        "Marco bode",
+                        "Carsten Jancker"
+                    ],
+                    "correct": 1,
+                    "question": "Wer schrieb das Buch 'Die Blechtrommel'?"
+                },
+                {
+                    "content": [
+                        "Jens Nowotny",
+                        "G\u00fcnther Grass",
+                        "Marco bode",
+                        "Carsten Jancker"
+                    ],
+                    "correct": 2,
+                    "question": "Wer schrieb das Buch 'Die Blechtrommel'?"
+                }
+            ],
+            "Rounds": [
+                {
+                    "winner": 1
+                },
+                {
+                    "winner": 1
+                }
+            ],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": true,
+            "Title": "Bullet",
+            "winner": 0
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 2",
+            "winner": 1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Questions": [
+                {
+                    "content": [
+                        "s\u00fcdostasien ",
+                        "antwortB  ",
+                        "antwortC  ",
+                        "antwortD  "
+                    ],
+                    "correct": 0,
+                    "question": "frage"
+                }
+            ],
+            "Rounds": [
+                {
+                    "winner": -1
+                }
+            ],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 3",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 4",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 5",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 6",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 7",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 8",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 9",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 10",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 11",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 12",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 13",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 14",
+            "winner": -1
+        },
+        {
+            "Countdown": -1,
+            "CurrentRound": 0,
+            "Description": "desc.",
+            "Rounds": [],
+            "Rules": "Regeln",
+            "ScoreGuest": 0,
+            "ScoreHome": 0,
+            "Stopwatch": false,
+            "Title": "Spiel 15",
+            "winner": -1
+        }
+    ],
+    "playerGuest": "ganzling",
+    "playerHome": "fettarmqp"
+}
