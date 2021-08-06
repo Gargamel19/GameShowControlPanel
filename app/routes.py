@@ -222,8 +222,6 @@ def game_edit_post(gameID, roundID):
             for i in range(return_json["amount_of_rounds"]):
                 if len(current_game["Rounds"]) <= i:
                     current_game["Rounds"].append({"winner": -1})
-        print(current_game["Rounds"])
-        print(return_json["round_number"])
 
         if return_json["has_questions"]:
             if "Questions" not in current_game:
@@ -242,7 +240,7 @@ def game_edit_post(gameID, roundID):
                                 "correct": 1
                             }
                         )
-            current_game["Questions"][return_json["round_number"]] = {
+            current_game["Questions"][int(roundID)] = {
                 "question": return_json["frage"][0],
                 "content": return_json["frage"][1],
                 "correct": return_json["frage"][2],

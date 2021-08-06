@@ -116,8 +116,6 @@ function save_settings(){
         output_json["has_rounds"] = true
         let amount_of_rounds = parseInt(document.getElementsByClassName("amount_of_rounds")[0].value);
         output_json["amount_of_rounds"] = amount_of_rounds
-        let round_number = parseInt(document.getElementsByClassName("round_number")[0].innerHTML) - 1;
-        output_json["round_number"] = round_number
 
         if(document.getElementsByClassName("checkbox_switch_questions")[0].checked){
             output_json["has_questions"] = true
@@ -140,16 +138,8 @@ function save_settings(){
                 right_answer = 3
             }
             output_json["frage"] = [question, [answer_0, answer_1, answer_2, answer_3], right_answer]
-
-            if(document.getElementsByClassName("round_player_button_0")[0].classList.contains("winner_player_button")){
-                output_json["winner"] = 0
-            }else if(document.getElementsByClassName("round_player_button_1")[0].classList.contains("winner_player_button")){
-                output_json["winner"] = 1
-            }
         }else{
             output_json["has_questions"] = false
-            let winner = -1
-            output_json["winner"] = winner
         }
 
     }else{
