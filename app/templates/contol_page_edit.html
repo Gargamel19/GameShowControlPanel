@@ -26,7 +26,7 @@
                 Beschreibung
             </div>
             <div class="panel_sub_text description_panel_text">
-                <textarea class="description">{{ desc }}</textarea>
+                <textarea class="description" style="width:100%;">{{ desc }}</textarea>
             </div>
         </div>
         <div class="panel regeln">
@@ -34,7 +34,7 @@
                 Regeln
             </div>
             <div class="panel_sub_text rules_panel_text">
-                <textarea class="rules">{{ rules }}</textarea>
+                <textarea class="rules" style="width:100%;">{{ rules }}</textarea>
             </div>
         </div>
         <div class="panel stopwatch">
@@ -85,76 +85,78 @@
                 {% endif %}
             </div>
         </div>
-        <div class="panel frage">
-
-            <div class="panel_titel">
-                        Frage
-            </div>
-
-            {% if noquestion %}
-
-                <div class="panel_shown_text show_when_question_switch" style="display: none">
-                    <input type="text" class="question" value="{{frage[1]}}"> <br>
-                    {% for x in range(frage[2]|length) %}
-                        <input type="text" class="answer_{{ x }}"  value="{{ frage[2][x] }} ">
-                        {% if frage[3] == x %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
-                        {% else %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
-                        {% endif %}
-                         <br>
-                    {% endfor %}
-                </div>
-                <div style="display: flex; margin: 6px;">
-                    <input style="margin: 6px;" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch">
-                </div>
-            {% else %}
-
-                <div class="panel_shown_text show_when_question_switch">
-                    <input type="text" class="question" value="{{frage[1]}}"> <br>
-                    {% for x in range(frage[2]|length) %}
-                        <input type="text" class="answer_{{ x }}"  value="{{ frage[2][x] }} ">
-                        {% if frage[3] == x %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
-                        {% else %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
-                        {% endif %}
-                         <br>
-                    {% endfor %}
-                </div>
-                <div style="display: flex; margin: 6px;">
-                    <input style="margin: 6px;" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch" checked>
-                </div>
-            {% endif %}
-
-
-        </div>
 
         <div class="panel runde">
 
-            <div class="panel_titel">
-                    Runden
-            </div>
+            {% if norounds %}
+                <div>
+                    <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
+                    <p class="panel_titel">Runde</p>
+                </div>
+            {% else %}
+                <div>
+                    <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch" checked>
+                    <p class="panel_titel">Runde</p>
+                </div>
+            {% endif %}
+<!-- Ich glaube display=flex in der .js macht das kaputt. Konnte es nicht fixen -->
             <div class="panel_shown_text">
                 {% if norounds %}
-                    <div style="display: none; margin: 6px;" class="show_when_rounds_switch">
+                    <div class="show_when_rounds_switch">
                         Rounds: <input type="text" class="amount_of_rounds show_when_rounds_switch" value="{{ round_amount }}">
-                    </div>
-                    <div style="display: flex; margin: 6px;">
-                        <input style="margin: 6px;" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
                     </div>
                 {% else %}
-                    <div style="margin: 6px;" class="show_when_rounds_switch">
+                    <div class="show_when_rounds_switch">
                         Rounds: <input type="text" class="amount_of_rounds show_when_rounds_switch" value="{{ round_amount }}">
-                    </div>
-                    <div style="display: flex; margin: 6px;">
-                        <input style="margin: 6px;" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch" checked>
                     </div>
                 {% endif %}
             </div>
+        </div>
 
+        <div class="panel frage show_when_rounds_switch">
 
+            {% if norounds %}
+                <div style="display: flex;">
+                    <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch">
+                    <p class="panel_titel">Frage</p>
+                </div>
+            {% else %}
+                <div style="display: flex;">
+                    <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch" checked>
+                    <p class="panel_titel">Frage</p>
+                </div>
+            {% endif %}
 
+            {% if noquestion %}
+
+                <div class="panel_shown_text show_when_question_switch" style="display: none;">
+                    <input type="text" class="question" value="{{frage[1]}}"> <br>
+                    {% for x in range(frage[2]|length) %}
+                        <input type="text" class="answer_{{ x }}"  value="{{ frage[2][x] }} ">
+                        {% if frage[3] == x %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
+                        {% else %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
+                        {% endif %}
+                         <br>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <div class="panel_shown_text show_when_question_switch">
+                    <input type="text" class="question" value="{{frage[1]}}" style="width:100%;"> <br>
+                    {% for x in range(frage[2]|length) %}
+                        <input type="text" class="answer_{{ x }}" style="width: 90%;"  value="{{ frage[2][x] }} ">
+                        {% if frage[3] == x %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" style="float: center;" class="answer_cb answer_cb_{{ x }}" checked>
+                        {% else %}
+                        <input onclick="set_answer_cb(this)" type="checkbox" style="float: center;" class="answer_cb answer_cb_{{ x }}">
+                        {% endif %}
+                         <br>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
         </div>
 
