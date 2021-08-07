@@ -11,12 +11,12 @@
     <div class="outer_class">
 
         <header>
-            <div class="game_title"><input type="text" value="{{ titel}}"> </div>
-            <div class="game_control">
-
-                <a class="game_number">{{gameID+1}}</a>
-
-                <input type="text" class="amount_of_games" value="{{ game_amount }}">
+            <div class="game_title header_div_side">
+                <input type="text" class="stretch" value="{{ titel}}">
+            </div>
+            <div class="game_number header_div_middle">{{gameID+1}}</div>
+            <div class="game_control header_div_side">
+                <input type="text" class="amount_of_games stretch" style="text-align: right;" value="{{ game_amount }}">
             </div>
         </header>
         <div id="header_spacer">
@@ -26,7 +26,7 @@
                 Beschreibung
             </div>
             <div class="panel_sub_text description_panel_text">
-                <textarea class="description" style="width:100%;">{{ desc }}</textarea>
+                <textarea class="description" style="width:100%; resize: vertical;">{{ desc }}</textarea>
             </div>
         </div>
         <div class="panel regeln">
@@ -34,14 +34,14 @@
                 Regeln
             </div>
             <div class="panel_sub_text rules_panel_text">
-                <textarea class="rules" style="width:100%;">{{ rules }}</textarea>
+                <textarea class="rules" style="width:100%; resize: vertical;">{{ rules }}</textarea>
             </div>
         </div>
         <div class="panel stopwatch">
             <div class="head">
-                <input type="text" class="nameHome" value="{{playerHome}}">
+                <input type="text" class="nameHome" style="width:calc(50% - 30px);" value="{{playerHome}}">
                 <button>Reset</button>
-                <input type="text" class="nameGuest" value="{{playerGuest}}">
+                <input type="text" class="nameGuest" style="width:calc(50% - 30px);" value="{{playerGuest}}">
             </div>
 
             <div class="countdown row">
@@ -89,12 +89,12 @@
         <div class="panel runde">
 
             {% if norounds %}
-                <div>
-                    <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
+                <div style="display: flex;">
+                    <input style="margin: var(--standard_margin); margin-top: bottom" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
                     <p class="panel_titel">Runde</p>
                 </div>
             {% else %}
-                <div>
+                <div style="display: flex;">
                     <input style="margin: var(--standard_margin);" class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch" checked>
                     <p class="panel_titel">Runde</p>
                 </div>
@@ -147,11 +147,11 @@
                 <div class="panel_shown_text show_when_question_switch">
                     <input type="text" class="question" value="{{frage[1]}}" style="width:100%;"> <br>
                     {% for x in range(frage[2]|length) %}
-                        <input type="text" class="answer_{{ x }}" style="width: 90%;"  value="{{ frage[2][x] }} ">
+                        <input type="text" class="answer_{{ x }}" style="width: calc(100% - 25px);"  value="{{ frage[2][x] }} ">
                         {% if frage[3] == x %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" style="float: center;" class="answer_cb answer_cb_{{ x }}" checked>
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
                         {% else %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" style="float: center;" class="answer_cb answer_cb_{{ x }}">
+                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
                         {% endif %}
                          <br>
                     {% endfor %}
@@ -161,7 +161,7 @@
         </div>
 
         <form method="post">
-            <div class="panel save_button_div">
+            <div class="save_button_div" style="margin-left: calc(var(--standard_margin)*2">
                 <button onclick="save_settings()" >save</button>
             </div>
         </form>
