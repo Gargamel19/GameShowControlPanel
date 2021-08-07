@@ -50,12 +50,13 @@ body{
     border: 1px solid #707070;
     border-radius: 10px;
     margin: var(--standard_margin);
+    padding: var(--standard_margin);
     background: rgb(33,33,33);
     background: linear-gradient(300deg, rgba(33,33,33,1) 0%, rgba(26,26,26,1) 100%);
 }
 .panel_titel{
-    margin: var(--standard_margin);
-    margin-top: calc(var(--standard_margin)/2);
+    margin-top: 0;
+    font-size: var(--big_font);
 }
 .panel_text{
     margin: var(--standard_margin);
@@ -65,18 +66,15 @@ body{
 .answer_panel_text,
 .panel_shown_text{
     font-size: var(--small_font);
-    margin: var(--standard_margin);
 }
 .panel_hidden_text{
     display: none;
     font-size: var(--small_font);
-    margin: var(--standard_margin);
 }
 .head{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: var(--standard_margin);
 }
 .win_left{
     background: rgb(31,30,31);
@@ -91,7 +89,6 @@ body{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: var(--standard_margin);
 }
 
 .countdown_value_input{
@@ -192,8 +189,7 @@ button:active {
 }
 .game_button{
     text-align: center;
-    width: 26px;
-    margin: 2px;
+    width: 1em;
 }
 .score_player{
     font-size: var(--big_font);
@@ -223,7 +219,6 @@ input[role=switch] {
   display: inline-block;
   width: 2.4em;
   height: 1.4em;
-  margin: -.2em 0;
   box-sizing: content-box;
   padding: 0;
   border: none;
