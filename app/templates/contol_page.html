@@ -2,6 +2,8 @@
 <html lang="en">
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/control_page.css') }}">
 <script src="{{ url_for('static', filename='scripts/control_page.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/stopwatch.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/countdown.js') }}"></script>
 <head>
     <meta charset="UTF-8">
     <title>{{ titel }}</title>
@@ -53,18 +55,24 @@
             </div>
             {% if countdown_enabled %}
             <div class="countdown row">
-                <div style="width: 50%; float: left">
+                <div style="width: 60%; float: left">
                     <div>Countdown</div>
                 </div>
-                <div style="width: 20%" class="input">
-                    <input type="text" value="{{countdown}}">
+                <div style="width: 10%" class="input">
+                    <input id="countdown_min" type="text" value="{{countdown_min}}" style="width:100%">
                 </div>
-                <div style="width: 15%;">
-                    <button style="float: right">Start</button>
+                <div style="width: 10%" class="input">
+                    <input id="countdown_sec" type="text" value="{{countdown_sec}}" style="width:100%">
                 </div>
-                <div style="width: 15%">
-                    <button style="float: right">Reset</button>
+                <div style="width: 10%;">
+                    <button id="countdown_start_stop" onclick="start_stop()" style="float: right">Start</button>
                 </div>
+                <div style="width: 10%">
+                    <button onclick="countdown.clear()" style="float: right">Reset</button>
+                </div>
+            </div>
+            <div class="timer">
+                <a id="minuten">{{ countdown_min }}</a>:<a id="sekunden">{{ countdown_sec }}</a>:<a id="msekunden">00</a>
             </div>
             {% endif %}
             {% if stopwatch_enabled %}
@@ -75,16 +83,15 @@
                 <div style="width: 20%">
                 </div>
                 <div style="width: 15%;">
-                    <button style="float: right">Start</button>
+                    <button id="stopwatch_start_stop" onclick="start_stop();" style="float: right">Start</button>
                 </div>
                 <div style="width: 15%">
-                    <button style="float: right">Reset</button>
+                    <button style="float: right" onclick="stoppuhr.clear()">Reset</button>
                 </div>
             </div>
-            {% endif %}
-
-            {% if stopwatch_enabled or countdown_enabled %}
-                <p class="timer">00:00:00</p>
+            <div class="timer">
+                <a id="minuten">00</a>:<a id="sekunden">00</a>:<a id="msekunden">00</a>
+            </div>
             {% endif %}
         </div>
         {% if frage|length > 0%}

@@ -1,5 +1,6 @@
 import configparser
 import json
+import math
 
 from flask import render_template, redirect, url_for, request
 
@@ -67,6 +68,10 @@ def game(gameID, roundID):
         elif game_dummy.winner == 1:
             win_list[0].append(-1)
             win_list[1].append(1)
+    min_string = str(math.floor(game.countdown/60)).zfill(2)
+    min = math.floor(game.countdown/60)
+    sec_string = str((game.countdown-min*60)).zfill(2)
+    sec = str((game.countdown-min*60)).zfill(2)
     return render_template('contol_page.html', title='Game', gameID=gameID_int,
                             roundID=roundID_int, titel=game.title, desc=game.description, rules=game.rules,
                             game_score_0=game_score_0, game_score_1=game_score_1, round_score_0=round_score_0,
@@ -75,7 +80,7 @@ def game(gameID, roundID):
                             frage=frage, current_winning=cw, bonusHome=show.bonusPlayerHome,
                             bonusGuest=show.bonusPlayerGuest, playerHome=show.playerHome, playerGuest=show.playerGuest,
                             stopwatch_enabled=game.stopwatch_enabled, countdown_enabled=game.countdown_enabled,
-                            countdown=game.countdown)
+                            countdown_min=min_string, countdown_sec=sec_string)
 
 @app.route('/<gameID>/round/<roundID>/edit', methods=['GET'])
 def game_edit(gameID, roundID):
@@ -137,6 +142,8 @@ def game_edit(gameID, roundID):
     countdown = -1
     if game.countdown == -1:
         countdown = 10
+    else:
+        countdown = game.countdown
 
     round_amount = len(rounds_list)
     if len(rounds_list) == 0:

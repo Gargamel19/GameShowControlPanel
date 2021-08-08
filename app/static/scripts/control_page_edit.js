@@ -50,7 +50,12 @@ function toggle_show_when_round(){
     checkbox_switch_rounds =  document.getElementsByClassName("checkbox_switch_rounds")[0];
     checkbox_switch_questions =  document.getElementsByClassName("checkbox_switch_questions")[0];
     show_when_rounds_switch = document.getElementsByClassName("show_when_rounds_switch");
-
+    show_when_rounds_switch_block = document.getElementsByClassName("show_when_rounds_switch_block")[0];
+    if (checkbox_switch_rounds.checked) {
+        show_when_rounds_switch_block.style.display = "block"
+    } else {
+        show_when_rounds_switch_block.style.display = "none"
+    }
     for (let i = 0; i < show_when_rounds_switch.length; i++) {
         if(checkbox_switch_rounds.checked){
             show_when_rounds_switch[i].style.display = "flex"
