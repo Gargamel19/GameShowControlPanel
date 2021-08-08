@@ -3,14 +3,23 @@
   document.getElementById(id).innerHTML = string;
 }
 
-function start_stop() {
+function countdown_start_stop() {
 const btn = document.getElementById("countdown_start_stop")
-    if (btn.textContent === "Start") {
-        countdown.start();
+  if (btn.classList.contains("unloaded")) {
+        btn.classList.remove("unloaded")
+        btn.classList.add("started")
         btn.textContent = "Stop";
-    } else {
+        countdown.start();
+    } else if (btn.classList.contains("started")) {
+        btn.classList.remove("started")
+        btn.classList.add("stopped")
         btn.textContent = "Start";
         countdown.stop();
+    } else if (btn.classList.contains("stopped")) {
+        btn.classList.remove("stopped")
+        btn.classList.add("started")
+        btn.textContent = "Stop";
+        countdown.resume();
     }
 }
 
@@ -23,6 +32,11 @@ var countdown = (function() {
   var anzrunden = 0;
   return {
     start: function() {
+      mins = document.getElementById("countdown_min").value;
+      secs = document.getElementById("countdown_sec").value;
+      stop = 0;
+    },
+    resume: function() {
       stop = 0;
     },
     stop: function() {
@@ -73,11 +87,11 @@ var countdown = (function() {
       countdown.html();
     },
     html: function() {
-      idset("minuten", ("00" + mins).slice(-2));
-      idset("sekunden", ("00" + secs).slice(-2));
-      idset("msekunden", ("00" + msecs).slice(-2));
-      idset("runden", runden);
-      idset("anzrunden", anzrunden + " Runden");
+      idset("countdown_minuten", ("00" + mins).slice(-2));
+      idset("countdown_sekunden", ("00" + secs).slice(-2));
+      idset("countdown_msekunden", ("00" + msecs).slice(-2));
+      idset("countdown_runden", runden);
+      idset("countdown_anzrunden", anzrunden + " Runden");
     }
   }
 })();

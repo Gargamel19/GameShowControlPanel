@@ -65,14 +65,14 @@
                     <input id="countdown_sec" type="text" value="{{countdown_sec}}" style="width:100%">
                 </div>
                 <div style="width: 10%;">
-                    <button id="countdown_start_stop" onclick="start_stop()" style="float: right">Start</button>
+                    <button id="countdown_start_stop" class="unloaded" onclick="countdown_start_stop()" style="float: right">Start</button>
                 </div>
                 <div style="width: 10%">
                     <button onclick="countdown.clear()" style="float: right">Reset</button>
                 </div>
             </div>
             <div class="timer">
-                <a id="minuten">{{ countdown_min }}</a>:<a id="sekunden">{{ countdown_sec }}</a>:<a id="msekunden">00</a>
+                <a id="countdown_minuten">{{ countdown_min }}</a>:<a id="countdown_sekunden">{{ countdown_sec }}</a>:<a id="countdown_msekunden">00</a>
             </div>
             {% endif %}
             {% if stopwatch_enabled %}
@@ -83,14 +83,14 @@
                 <div style="width: 20%">
                 </div>
                 <div style="width: 15%;">
-                    <button id="stopwatch_start_stop" onclick="start_stop();" style="float: right">Start</button>
+                    <button id="stopwatch_start_stop" onclick="stopwatch_start_stop();" style="float: right">Start</button>
                 </div>
                 <div style="width: 15%">
                     <button style="float: right" onclick="stoppuhr.clear()">Reset</button>
                 </div>
             </div>
             <div class="timer">
-                <a id="minuten">00</a>:<a id="sekunden">00</a>:<a id="msekunden">00</a>
+                <a id="stopwatch_minuten">00</a>:<a id="stopwatch_sekunden">00</a>:<a id="stopwatch_msekunden">00</a>
             </div>
             {% endif %}
         </div>

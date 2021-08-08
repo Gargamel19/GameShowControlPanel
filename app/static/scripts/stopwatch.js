@@ -3,8 +3,9 @@
   document.getElementById(id).innerHTML = string;
 }
 
-function start_stop() {
-const btn = document.getElementById("stopwatch_start_stop")
+function stopwatch_start_stop() {
+    const btn = document.getElementById("stopwatch_start_stop")
+
     if (btn.textContent === "Start") {
         btn.textContent = "Stop";
         stoppuhr.start();
@@ -70,11 +71,11 @@ var stoppuhr = (function() {
       stoppuhr.html();
     },
     html: function() {
-      idset("minuten", ("00" + mins).slice(-2));
-      idset("sekunden", ("00" + secs).slice(-2));
-      idset("msekunden", ("00" + msecs).slice(-2));
-      idset("runden", runden);
-      idset("anzrunden", anzrunden + " Runden");
+      idset("stopwatch_minuten", ("00" + mins).slice(-2));
+      idset("stopwatch_sekunden", ("00" + secs).slice(-2));
+      idset("stopwatch_msekunden", ("00" + msecs).slice(-2));
+      idset("stopwatch_runden", runden);
+      idset("stopwatch_anzrunden", anzrunden + " Runden");
     }
   }
 })();
