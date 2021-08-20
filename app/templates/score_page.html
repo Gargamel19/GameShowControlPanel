@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/score_page.css') }}">
+<head>
+    <meta charset="UTF-8" http-equiv="refresh" content="1">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="table">
+
+        <div class="played_games">
+            {% for i in range(win_list[0]|length) %}
+                {% if win_list[0][i] == 0  %}
+                    <div class="not_played game_field game_field_{{ i }}">
+                        {{ i + 1 }}
+                    </div>
+                {% else %}
+                    <div class="played game_field game_field_{{ i }}">
+                        {{ i + 1 }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="player">
+            <div class="player_panel playerHome">
+                <div class="player_names">{{ player_home_name }}</div>
+                <div class="score_sum">
+                    <div class="score_box">
+                        {{ player_home_score }}
+                    </div>
+                </div>
+                <progress class="bp" value="{{ (player_home_score/60) * 100 }}" max="100">70 %</progress>
+                <div class="points_player points_home">
+                    {% for i in range(win_list[0]|length) %}
+                        <div class="game_field_player game_field_player_home_{{ i }}">
+                            {% if win_list[0][i] == 1 %}
+                                <div class="game_field won_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% elif win_list[0][i] == -1 %}
+                                <div class="game_field lose_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% elif win_list[0][i] == 0  %}
+                                <div class="game_field not_decided_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="player_panel playerGuest">
+                <div class="player_names">{{ player_guest_name }}</div>
+                <div class="score_sum">
+                    <div class="score_box">
+                        {{ player_guest_score }}
+                    </div>
+                </div>
+                <progress class="bp" value="{{ (player_guest_score/60) * 100 }}" max="100">70 %</progress>
+
+                <div class="points_player points_guest">
+                    {% for i in range(win_list[0]|length) %}
+                        <div class="game_field_player game_field_player_guest_{{ i }}">
+
+                            {% if win_list[1][i] == 1 %}
+                                <div class="game_field won_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% elif win_list[1][i] == -1 %}
+                                <div class="game_field lose_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% elif win_list[1][i] == 0  %}
+                                <div class="game_field not_decided_game">
+                                    {{ i + 1 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+body{
+    font-family: Impact, fantasy;
+}
+.table{
+    background-color: chocolate;
+    border-style: solid;
+    border-color: saddlebrown;
+    border-radius: 5px;
+}
+
+.played_games{
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+
+
+}
+.game_field{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border-color: #1f1e1f;
+    border-style: solid;
+    color: #1f1e1f;
+    background-color: #d2d2d2;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    margin: 4px;
+}
+.not_played{
+    background-color: #d2d2d2;
+}
+.player_names{
+
+    font-size: 50px;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+    font-stretch: ultra-expanded;
+
+}
+.played{
+    background-color: #1f1e1f;
+}
+.player{
+    display: inline-flex;
+    width: 100%;
+}
+.player_panel{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 5%;
+}
+.score_sum{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+}
+.score_box{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f1e1f;
+    color: #d2d2d2;
+    font-size: 70px;
+
+    width: 2.5em;
+    height: 1.2em;
+}
+.bp{
+    width: 80%;
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+    margin: 5%;
+
+}
+.points_player{
+    display: flex;
+    flex-wrap: wrap;
+}
+.game_field_player{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 20%;
+}
+.won_game{
+    background-color: #d2d2d2;
+}
+.lose_game{
+    background-color: #1f1e1f;
+}
+.not_decided_game{
+    background-color: #485F6E;
+}

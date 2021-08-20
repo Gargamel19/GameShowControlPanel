@@ -82,6 +82,34 @@ def game(gameID, roundID):
                             stopwatch_enabled=game.stopwatch_enabled, countdown_enabled=game.countdown_enabled,
                             countdown_min=min_string, countdown_sec=sec_string)
 
+
+@app.route('/game_score')
+def game_score():
+    games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
+    show = Show.readFromJson(games_json)
+    win_list = [[], []]
+    player_guest_score = 0
+    player_home_score = 0
+    game_points = 1
+    for game_dummy in show.games:
+        if game_dummy.winner == -1:
+            win_list[0].append(0)
+            win_list[1].append(0)
+        elif game_dummy.winner == 0:
+            player_home_score += game_points
+            win_list[0].append(1)
+            win_list[1].append(-1)
+        elif game_dummy.winner == 1:
+            player_guest_score += game_points
+            win_list[0].append(-1)
+            win_list[1].append(1)
+        game_points += 1
+
+    return render_template('score_page.html', title='Game', win_list=win_list, player_home_score=player_home_score,
+                           player_guest_score=player_guest_score, player_home_name=show.playerHome.upper(),
+                           player_guest_name=show.playerGuest.upper())
+
+
 @app.route('/<gameID>/round/<roundID>/edit', methods=['GET'])
 def game_edit(gameID, roundID):
     gameID_int = int(gameID)
