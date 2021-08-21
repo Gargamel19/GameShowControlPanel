@@ -35,13 +35,13 @@ body{
 }
 .played{
     background-color: #1f1e1f;
-    color: #1f1e1f;
+    color: #444444;
 }
 .player_names{
 
     font-size: 50px;
     font-weight: bold;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: white;
     font-stretch: ultra-expanded;
 
@@ -73,9 +73,13 @@ body{
     background-color: #1f1e1f;
     color: white;
     font-size: 70px;
-
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #707070;
     width: 2.5em;
     height: 1.2em;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
 }
 .bonus_points{
     background-color: #d2d2d2;
@@ -84,7 +88,7 @@ body{
     padding: .5em 1.2em;
     border-style: solid;
     border-radius: 5px;
-    border-color: #3B666B;
+    border-color: #707070;
 }
 .bp{
     width: 80%;
@@ -105,11 +109,11 @@ body{
     width: 20%;
 }
 .won_game{
-    background-color: white;
+    background-color: #d2d2d2;
 }
 .lose_game{
-    background-color: #1f1e1f;
-    color: #707070;
+    background-color: black;
+    color: black;
 }
 .not_decided_game{
     background-color: #707070;
