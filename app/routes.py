@@ -107,7 +107,8 @@ def game_score():
 
     return render_template('score_page.html', title='Game', win_list=win_list, player_home_score=player_home_score,
                            player_guest_score=player_guest_score, player_home_name=show.playerHome.upper(),
-                           player_guest_name=show.playerGuest.upper())
+                           player_guest_name=show.playerGuest.upper(), bonusHome=show.bonusPlayerHome,
+                           bonusGuest=show.bonusPlayerGuest)
 
 
 @app.route('/<gameID>/round/<roundID>/edit', methods=['GET'])

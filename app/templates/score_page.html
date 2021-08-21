@@ -27,10 +27,10 @@
                 <div class="player_names">{{ player_home_name }}</div>
                 <div class="score_sum">
                     <div class="score_box">
-                        {{ player_home_score }}
+                        <div>{{ player_home_score + bonusHome }}</div>
                     </div>
                 </div>
-                <progress class="bp" value="{{ (player_home_score/60) * 100 }}" max="100">70 %</progress>
+                <progress class="bp" value="{{ ((player_home_score + bonusHome)/60) * 100 }}" max="100">70 %</progress>
                 <div class="points_player points_home">
                     {% for i in range(win_list[0]|length) %}
                         <div class="game_field_player game_field_player_home_{{ i }}">
@@ -50,15 +50,18 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div class="bonus_points">
+                    Bonus: {{ bonusHome }}
+                </div>
             </div>
             <div class="player_panel playerGuest">
                 <div class="player_names">{{ player_guest_name }}</div>
                 <div class="score_sum">
                     <div class="score_box">
-                        {{ player_guest_score }}
+                        {{ player_guest_score + bonusGuest }}
                     </div>
                 </div>
-                <progress class="bp" value="{{ (player_guest_score/60) * 100 }}" max="100">70 %</progress>
+                <progress class="bp" value="{{ ((player_guest_score + bonusGuest)/60) * 100 }}" max="100">70 %</progress>
 
                 <div class="points_player points_guest">
                     {% for i in range(win_list[0]|length) %}
@@ -80,7 +83,9 @@
                         </div>
                     {% endfor %}
                 </div>
-
+                <div class="bonus_points">
+                    Bonus: {{ bonusGuest }}
+                </div>
             </div>
         </div>
 
