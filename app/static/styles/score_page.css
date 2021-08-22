@@ -1,5 +1,6 @@
 body{
     font-family: Impact, fantasy;
+    font-size: 25px;
 }
 .table{
     background-color: chocolate;
@@ -112,8 +113,8 @@ body{
     background-color: #d2d2d2;
 }
 .lose_game{
-    background-color: black;
-    color: black;
+    background-color: #1f1e1f;
+    color: #444444;
 }
 .not_decided_game{
     background-color: #707070;
