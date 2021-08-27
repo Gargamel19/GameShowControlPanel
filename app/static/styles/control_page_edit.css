@@ -106,7 +106,17 @@ textarea{
     transition: 0.5s;
     outline: none;
 }
-
+input[type=number]{
+    color: #d2d2d2;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: rgb(29,29,29);
+    background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(39,39,39,1) 100%);
+    border: 1px solid #707070;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
 input[type=text]{
     color: #d2d2d2;
     box-sizing: border-box;

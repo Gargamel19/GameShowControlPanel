@@ -177,10 +177,10 @@ def game_edit(gameID, roundID):
         countdown = 10
     else:
         countdown = game.countdown
-
-    round_amount = len(rounds_list)
-    if len(rounds_list) == 0:
-        round_amount += 1
+    print("round_amount = ", len(game.rounds))
+    round_amount = len(game.rounds)
+    if round_amount == 0:
+        round_amount = 1
 
     return render_template('contol_page_edit.html', title='Game', gameID=gameID_int,
                             roundID=roundID_int, titel=game.title, desc=game.description, rules=game.rules,
@@ -223,12 +223,12 @@ def game_post(gameID, roundID):
 @app.route('/<gameID>/round/<roundID>/edit', methods=['POST'])
 def game_edit_post(gameID, roundID):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show = Show.readFromJson(show_json)
     return_json = json.loads(request.form["return_value"])
+
+    print(return_json)
 
     show_json["playerHome"] = return_json["nameHome"]
     show_json["playerGuest"] = return_json["nameGuest"]
-
 
     if len(show_json["games"]) < return_json["amount_of_games"]:
         for i in range(return_json["amount_of_games"]):
@@ -248,6 +248,7 @@ def game_edit_post(gameID, roundID):
                     }
                 )
     elif len(show_json["games"]) > return_json["amount_of_games"]:
+        print("shrink rounds")
         show_json["games"] = show_json["games"][:return_json["amount_of_games"]]
 
     current_game = show_json["games"][return_json["game_number"]]
@@ -258,10 +259,13 @@ def game_edit_post(gameID, roundID):
     current_game["Stopwatch"] = return_json["stopwatch"]
 
     if return_json["has_rounds"]:
+        print(return_json["amount_of_rounds"])
         if len(current_game["Rounds"]) < return_json["amount_of_rounds"]:
             for i in range(return_json["amount_of_rounds"]):
                 if len(current_game["Rounds"]) <= i:
                     current_game["Rounds"].append({"winner": -1})
+        elif len(current_game["Rounds"]) > return_json["amount_of_rounds"]:
+            current_game["Rounds"] = current_game["Rounds"][:return_json["amount_of_rounds"]]
 
         if return_json["has_questions"]:
             if "Questions" not in current_game:

@@ -119,9 +119,7 @@ function save_settings(){
 
     if(document.getElementsByClassName("checkbox_switch_rounds")[0].checked){
         output_json["has_rounds"] = true
-        let amount_of_rounds = parseInt(document.getElementsByClassName("amount_of_rounds")[0].value);
-        output_json["amount_of_rounds"] = amount_of_rounds
-
+        output_json["amount_of_rounds"] = parseInt(document.getElementsByClassName("amount_of_rounds")[0].value)
         if(document.getElementsByClassName("checkbox_switch_questions")[0].checked){
             output_json["has_questions"] = true
             let right_answer = 0

@@ -14,9 +14,9 @@
             <div class="game_title header_div_side">
                 <input type="text" class="stretch" value="{{ titel}}">
             </div>
-            <div class="game_number header_div_middle">{{gameID+1}}</div>
+            <div class="game_number header_div_middle">{{gameID + 1}}</div>
             <div class="game_control header_div_side">
-                <input type="text" class="amount_of_games stretch" style="text-align: right;" value="{{ game_amount }}">
+                <input type="number" class="amount_of_games stretch" style="text-align: right;" value="{{ game_amount }}">
             </div>
         </header>
         <div id="header_spacer">
@@ -51,7 +51,7 @@
                         <div>Countdown</div>
                     </div>
                     <div class="visible_countdown" style="width: 20%">
-                        <input class="countdown_value_input" type="text" value="{{countdown}}">
+                        <input class="countdown_value_input" type="number" value="{{countdown}}">
                     </div>
 
                 {% else %}
@@ -99,15 +99,14 @@
                     <p class="panel_titel">Runde</p>
                 </div>
             {% endif %}
-<!-- Ich glaube display=flex in der .js macht das kaputt. Konnte es nicht fixen -->
             <div class="panel_shown_text">
                 {% if norounds %}
                     <div class="show_when_rounds_switch">
-                        Rounds: <input type="text" class="amount_of_rounds show_when_rounds_switch" value="{{ round_amount }}">
+                        Rounds: <input class="amount_of_rounds show_when_rounds_switch" type="number" value="{{ round_amount }}">
                     </div>
                 {% else %}
                     <div class="show_when_rounds_switch">
-                        Rounds: <input type="text" class="amount_of_rounds show_when_rounds_switch" value="{{ round_amount }}">
+                        Rounds: <input class="amount_of_rounds show_when_rounds_switch" type="number" value="{{ round_amount }}">
                     </div>
                 {% endif %}
             </div>
