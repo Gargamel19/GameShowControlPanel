@@ -83,6 +83,10 @@ def game(gameID, roundID):
                             countdown_min=min_string, countdown_sec=sec_string)
 
 
+@app.route('/file')
+def file():
+    games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
+    return games_json
 @app.route('/game_score')
 def game_score():
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")

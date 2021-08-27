@@ -159,15 +159,15 @@ class Werkzeuge:
             for round in show.games[x].rounds:
                 if round.winner == 0:
                     round_score_home += 1
-                    round_score_home_str += "x "
-                    round_score_guest_str += "o "
+                    round_score_home_str += ") "
+                    round_score_guest_str += "( "
                 elif round.winner == 1:
                     round_score_guest += 1
-                    round_score_home_str += "o "
-                    round_score_guest_str += "x "
+                    round_score_home_str += "( "
+                    round_score_guest_str += ") "
                 else:
-                    round_score_home_str += "o "
-                    round_score_guest_str += "x "
+                    round_score_home_str += "! "
+                    round_score_guest_str += "! "
 
             Werkzeuge.write_line_to_file(score_game_dir, "Points.txt", str(round_score_home) + " : " + str(round_score_guest))
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Home.txt", str(round_score_home))

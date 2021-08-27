@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/score_page.css') }}">
+<script src="{{ url_for('static', filename='scripts/score_page.js') }}"></script>
+
 <head>
-    <meta charset="UTF-8" http-equiv="refresh" content="1">
+    <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body onload="readFile()">
 
     <div class="table">
+
 
         <div class="played_games">
             {% for i in range(win_list[0]|length) %}

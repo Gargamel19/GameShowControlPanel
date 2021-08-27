@@ -115,19 +115,15 @@
 
         <div class="panel frage show_when_rounds_switch_block">
 
-            {% if norounds %}
-                <div style="display: none;">
+            {% if noquestion %}
+                {% if noround %}
+                    <div style="display: none;">
+                {% else %}
+                    <div style="display: flex;">
+                {% endif %}
                     <input class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch">
                     <p class="panel_titel">Frage</p>
                 </div>
-            {% else %}
-                <div style="display: flex;">
-                    <input class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch" checked>
-                    <p class="panel_titel">Frage</p>
-                </div>
-            {% endif %}
-
-            {% if noquestion %}
 
                 <div class="panel_shown_text show_when_question_switch" style="display: none;">
                     <input type="text" class="question" value="{{frage[1]}}"> <br>
@@ -144,6 +140,15 @@
 
             {% else %}
 
+
+                {% if noround %}
+                    <div style="display: none;">
+                {% else %}
+                    <div style="display: flex;">
+                {% endif %}
+                    <input class="checkbox_switch checkbox_switch_questions" onclick="toggle_show_when_question()" type="checkbox" role="switch" checked>
+                    <p class="panel_titel">Frage</p>
+                </div>
                 <div class="panel_shown_text show_when_question_switch">
                     <input type="text" class="question" value="{{frage[1]}}" style="width:100%;"> <br>
                     {% for x in range(frage[2]|length) %}
