@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/question.css') }}">
+<script src="{{ url_for('static', filename='scripts/question.js') }}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Quesions</title>
+</head>
+<body>
+    <header>
+        <div class="controll_section">
+            <div class="game_control">
+                Game:<br>
+                {% if gameID > 0 %}
+                    <button onclick="location.href='/{{gameID-1}}/round/0/questions'" class="minus_game">-</button>
+                {% else %}
+                    <button class="minus_game">-</button>
+                {% endif %}
+                <a class="game_number">{{gameID + 1}}</a>
+
+                {% if games_ammount > gameID + 1%}
+                    <button onclick="location.href='/{{gameID + 1}}/round/0/questions'" class="plus_game">+</button>
+                {% else %}
+                    <button class="plus_game">+</button>
+                {% endif %}
+            </div>
+            <div class="round_control">
+                Round:<br>
+                {% if roundID > 0 %}
+                    <button onclick="location.href='/{{gameID}}/round/{{roundID - 1}}/questions'" class="minus_round">-</button>
+                {% else %}
+                    <button class="minus_round">-</button>
+                {% endif %}
+                    <a class="round_number">{{roundID + 1}}</a>
+
+                {% if round_ammount > roundID + 1%}
+                    <button onclick="location.href='/{{gameID}}/round/{{roundID + 1}}/questions'" class="plus_round">+</button>
+                {% else %}
+                    <button class="plus_round">+</button>
+                {% endif %}
+                </div>
+        </div>
+        <button onclick="aufloesen({{ correct }})" class="aufloesen">Get Answer</button>
+    </header>
+
+
+
+    <div class="question_answer_section">
+        <div class="question_section">
+            <h1>{{ question }}</h1>
+        </div>
+        {% if answers|length > 1 %}
+            <div class="answers_section">
+                {% for answer in answers %}
+                    <button onclick="antwort_auswahl({{answer[0]}})" id="answer_{{answer[0]}}" class="answer">{{ answer[1] }}</button>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

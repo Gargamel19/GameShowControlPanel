@@ -82,7 +82,7 @@ function set_answer_cb(clicked){
 }
 
 
-function save_settings(){
+function save_settings(target){
 
     let nameHome = document.getElementsByClassName("nameHome")[0].value;
     let nameGuest = document.getElementsByClassName("nameGuest")[0].value;
@@ -150,14 +150,12 @@ function save_settings(){
         output_json["has_questions"] = false
     }
 
-
-
+    console.log(document.getElementsByClassName("outer_class")[0].scrollTop)
     var input = document.createElement("input");
     input.name = "return_value"
 
     input.value = JSON.stringify(output_json);
     input.style.display = "none"
     document.getElementsByClassName("save_button_div")[0].appendChild(input)
-    console.log(JSON.stringify(output_json))
 
 }

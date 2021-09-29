@@ -5,6 +5,7 @@ import math
 from flask import render_template, redirect, url_for, request
 
 from app import app
+from app.Models.QuestionRound import QuestionRound
 from app.Models.Show import Show
 from app.utils import Werkzeuge
 
@@ -191,6 +192,38 @@ def game_edit(gameID, roundID):
                             bonusGuest=show.bonusPlayerGuest, playerHome=show.playerHome, playerGuest=show.playerGuest,
                             stopwatch_enabled=game.stopwatch_enabled, countdown_enabled=game.countdown_enabled,
                             countdown=countdown, noquestion=noquestion, norounds=norounds)
+
+
+@app.route('/<gameID>/round/<roundID>/questions', methods=['GET'])
+def questions(gameID, roundID):
+    gameID_int = int(gameID)
+    roundID_int = int(roundID)
+    games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
+    show, game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, gameID_int)
+    question = ""
+    answers = []
+    correct = -1
+    if len(rounds_list)>roundID_int:
+        print(rounds_list[roundID_int])
+        if len(rounds_list[roundID_int]) > 1:
+            print("YEP")
+            Werkzeuge.write_to_dir_structure(baseDir, show)
+            question = rounds_list[roundID_int][1]
+            answers = []
+            for i in range(len(rounds_list[roundID_int][2])):
+                answers.append([i, rounds_list[roundID_int][2][i]])
+            print(answers)
+            correct = rounds_list[roundID_int][3]
+    games_ammount = len(show.games)
+    round_ammount = len(rounds_list)
+    return render_template('question.html', question=question, answers=answers, gameID=gameID_int,
+                           roundID=roundID_int, games_ammount=games_ammount, round_ammount=round_ammount, correct=correct)
+
+
+    pass
+
+    # buttons rounds and games
+    #
 
 
 @app.route('/<gameID>/round/<roundID>', methods=['POST'])
