@@ -20,6 +20,7 @@ function aufloesen(element_id){
                 }
             }
             answers[i].disabled = true
+            answers[i].style.display = "block"
         }
         target.innerText = "delete"
     }else if(target.innerText === "delete"){

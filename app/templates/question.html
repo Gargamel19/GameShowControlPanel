@@ -49,13 +49,17 @@
         <div class="question_section">
             <h1>{{ question }}</h1>
         </div>
-        {% if answers|length > 1 %}
-            <div class="answers_section">
-                {% for answer in answers %}
+        <div class="answers_section">
+
+
+            {% for answer in answers %}
+                {% if answers|length <= 1 %}
+                    <button style="display: none" onclick="antwort_auswahl({{answer[0]}})" id="answer_{{answer[0]}}" class="answer right_answer">{{ answer[1] }}</button>
+                {% else %}
                     <button onclick="antwort_auswahl({{answer[0]}})" id="answer_{{answer[0]}}" class="answer">{{ answer[1] }}</button>
-                {% endfor %}
-            </div>
-        {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 
 </body>
