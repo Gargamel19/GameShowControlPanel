@@ -124,23 +124,19 @@ function save_settings(target){
             output_json["has_questions"] = true
             let right_answer = 0
             let question = document.getElementsByClassName("question")[0].value;
-            let answer_0 = document.getElementsByClassName("answer_0")[0].value;
-            if(document.getElementsByClassName("answer_cb_0")[0].checked){
-                right_answer = 0
+            let answers = []
+            let answer_divs = document.getElementsByClassName("answer_div");
+            for (let i = 0; i < answer_divs.length; i++) {
+                answers.push(answer_divs[i].children[1].value)
+                console.log(answer_divs[i].children[1].value)
+                console.log(answer_divs[i].children[2].checked)
+                if(answer_divs[i].children[2].checked){
+                    right_answer = i
+                }
             }
-            let answer_1 = document.getElementsByClassName("answer_1")[0].value;
-            if(document.getElementsByClassName("answer_cb_1")[0].checked){
-                right_answer = 1
-            }
-            let answer_2 = document.getElementsByClassName("answer_2")[0].value;
-            if(document.getElementsByClassName("answer_cb_2")[0].checked){
-                right_answer = 2
-            }
-            let answer_3 = document.getElementsByClassName("answer_3")[0].value;
-            if(document.getElementsByClassName("answer_cb_3")[0].checked){
-                right_answer = 3
-            }
-            output_json["frage"] = [question, [answer_0, answer_1, answer_2, answer_3], right_answer]
+
+
+            output_json["frage"] = [question, answers, right_answer]
         }else{
             output_json["has_questions"] = false
         }
@@ -158,4 +154,53 @@ function save_settings(target){
     input.style.display = "none"
     document.getElementsByClassName("save_button_div")[0].appendChild(input)
 
+}
+
+function add_quesion(){
+
+    index = 0
+
+    var newDiv = document.createElement("div");
+    newDiv.classList.add("answer_" + index + "_div")
+    newDiv.classList.add("answer_div")
+    var delete_quesion_button = document.createElement("button");
+    delete_quesion_button.classList.add("remove_answer")
+    delete_quesion_button.setAttribute("onclick", "delete_quesion('answer_"+index+"_div')")
+    delete_quesion_button.innerText = "-"
+    var quesion_input = document.createElement("input");
+    quesion_input.classList.add("answer_" + index)
+    quesion_input.classList.add("answer_input")
+    quesion_input.type = "text"
+    quesion_input.value = ""
+    var quesion_cb = document.createElement("input");
+    quesion_cb.classList.add("answer_cb_" + index)
+    quesion_cb.classList.add("answer_cb")
+    quesion_cb.type = "checkbox"
+    quesion_cb.setAttribute("onclick", "set_answer_cb(this)")
+    var break_element = document.createElement("br");
+    newDiv.appendChild(delete_quesion_button)
+    newDiv.appendChild(quesion_input)
+    newDiv.appendChild(quesion_cb)
+    newDiv.appendChild(break_element)
+    document.getElementsByClassName("answers_section")[0].appendChild(newDiv)
+    restructure_index()
+}
+
+function delete_quesion(target){
+    document.getElementsByClassName(target)[0].remove();
+    restructure_index()
+}
+
+function restructure_index(){
+    div_list = document.getElementsByClassName("answer_div")
+    for (let i = 0; i < div_list.length; i++) {
+        let index = div_list[i].classList.item(1).replace("answer_", "").replace("_div", "")
+        div_list[i].classList.remove("answer_" + index + "_div")
+        div_list[i].classList.add("answer_" + i + "_div")
+        div_list[i].children[0].setAttribute("onclick", "delete_quesion('answer_"+i+"_div')")
+        div_list[i].children[1].classList.remove("answer_" + index)
+        div_list[i].children[1].classList.add("answer_" + i)
+        div_list[i].children[2].classList.remove("answer_cb_" + index)
+        div_list[i].children[2].classList.add("answer_cb_" + i)
+    }
 }

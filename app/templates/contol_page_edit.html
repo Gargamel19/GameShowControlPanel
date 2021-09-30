@@ -150,15 +150,23 @@
                 </div>
                 <div class="panel_shown_text show_when_question_switch">
                     <input type="text" class="question" value="{{frage[1]}}" style="width:100%;"> <br>
+
+                    <div class="answers_section">
                     {% for x in range(frage[2]|length) %}
-                        <input type="text" class="answer_{{ x }}" style="width: calc(100% - 25px);"  value="{{ frage[2][x] }} ">
-                        {% if frage[3] == x %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
-                        {% else %}
-                        <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
-                        {% endif %}
-                         <br>
+                        <div class="answer_div answer_{{ x }}_div">
+                            <button onclick="delete_quesion('answer_{{ x }}_div')" class="remove_answer">-</button>
+                            <input type="text" class="answer_input answer_{{ x }}"  value="{{ frage[2][x] }} ">
+                            {% if frage[3] == x %}
+
+                                <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}" checked>
+                            {% else %}
+                                <input onclick="set_answer_cb(this)" type="checkbox" class="answer_cb answer_cb_{{ x }}">
+                            {% endif %}
+                            <br>
+                        </div>
                     {% endfor %}
+                    </div>
+                    <button onclick="add_quesion()" style="width: 100%; margin-top: 10px" class="add_answer">+</button>
                 </div>
             {% endif %}
 

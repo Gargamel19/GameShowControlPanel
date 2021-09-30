@@ -279,3 +279,6 @@ input[role=switch]:indeterminate::before {
 input[role=switch]:disabled:before {
   opacity: 0.4;
 }
+.answer_input{
+    width: calc(100% - 50px);
+}
