@@ -94,12 +94,12 @@ class Werkzeuge:
     def load_player(base_dir):
         player = []
         guest_name_file = join(base_dir, "Name_Guest.txt")
-        with open(guest_name_file, "r") as file:
+        with open(guest_name_file, "r", encoding="utf-8") as file:
             guest_name = file.readlines()[0]
             player.append(guest_name)
 
         home_name_file = join(base_dir, "Name_Home.txt")
-        with open(home_name_file, "r") as file:
+        with open(home_name_file, "r", encoding="utf-8") as file:
             home_name = file.readlines()[0]
             player.append(home_name)
         return player
@@ -192,11 +192,11 @@ class Werkzeuge:
     @staticmethod
     def write_line_to_file(dir, file, content):
         file_path = join(dir, file)
-        with open(file_path, 'w') as f:
+        with open(file_path, 'w', encoding="utf-8") as f:
             f.write(content)
 
     @staticmethod
     def write_lines_to_file(dir, file, content):
         file_path = join(dir, file)
-        with open(file_path, 'w') as f:
+        with open(file_path, 'w', encoding="utf-8") as f:
             f.writelines(content)

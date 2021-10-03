@@ -229,7 +229,6 @@ def questions(gameID, roundID):
 @app.route('/<gameID>/round/<roundID>', methods=['POST'])
 def game_post(gameID, roundID):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show = Show.readFromJson(show_json)
     return_json = json.loads(request.form["return_value"])
     if return_json["method"] == "cahage_game_winner":
         if show_json["games"][return_json["game"]]["winner"] == return_json["player"]:
