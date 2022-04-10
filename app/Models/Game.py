@@ -15,10 +15,11 @@ class Game:
     scoreGuest = 0
     winner = -1
 
-    def __init__(self, title, description, rules, countdown, stopwatch, current_round, rounds, scoreHome, scoreGuest, winner):
+    def __init__(self, title, description, rules, countdown, stopwatch, current_round, rounds, score_home, score_guest,
+                 winner):
         self.winner = winner
-        self.scoreHome = scoreHome
-        self.scoreGuest = scoreGuest
+        self.scoreHome = score_home
+        self.scoreGuest = score_guest
         self.current_round = current_round
         self.rounds = rounds
         self.stopwatch_enabled = stopwatch
@@ -29,11 +30,11 @@ class Game:
         self.title = title
 
     @staticmethod
-    def readFromJson(json):
+    def read_from_json(json):
         title = json["Title"]
         desc = json["Description"]
         rules = json["Rules"]
-        coutdown = json["Countdown"]
+        countdown = json["Countdown"]
         stopwatch = json["Stopwatch"]
         current_round = json["CurrentRound"]
         rounds_json = json["Rounds"]
@@ -44,11 +45,11 @@ class Game:
         rounds = []
         for x in range(len(rounds_json)):
             if len(questions_json) > x:
-                round = Round.readFromJson2(rounds_json[x], questions_json[x])
+                temp_round = Round.read_from_json2(rounds_json[x], questions_json[x])
             else:
-                round = Round.readFromJson1(rounds_json[x])
-            rounds.append(round)
-        scoreHome = json["ScoreHome"]
-        scoreGuest = json["ScoreGuest"]
+                temp_round = Round.read_from_json1(rounds_json[x])
+            rounds.append(temp_round)
+        score_home = json["ScoreHome"]
+        score_guest = json["ScoreGuest"]
         winner = json["winner"]
-        return Game(title, desc, rules, coutdown, stopwatch, current_round, rounds, scoreHome, scoreGuest, winner)
+        return Game(title, desc, rules, countdown, stopwatch, current_round, rounds, score_home, score_guest, winner)

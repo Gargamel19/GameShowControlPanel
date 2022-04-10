@@ -1,5 +1,3 @@
-
-
 class Round:
     winner = -1
 
@@ -7,14 +5,13 @@ class Round:
         self.winner = winner
 
     @staticmethod
-    def readFromJson2(json, questionRound_json):
+    def read_from_json2(json, question_round_json):
         from app.Models.QuestionRound import QuestionRound
-        questionRoundObs = QuestionRound(questionRound_json["question"],
-                                                       questionRound_json["content"],
-                                                       questionRound_json["correct"])
-        questionRoundObs.winner = json["winner"]
-        return questionRoundObs
+        question_round_obs = QuestionRound(question_round_json["question"], question_round_json["content"],
+                                           question_round_json["correct"])
+        question_round_obs.winner = json["winner"]
+        return question_round_obs
 
     @staticmethod
-    def readFromJson1(json):
+    def read_from_json1(json):
         return Round(json["winner"])

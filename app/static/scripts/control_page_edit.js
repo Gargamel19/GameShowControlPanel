@@ -1,6 +1,6 @@
 //Stopwatch
 function toggle_countdown_visibility(element){
-    visible_countdown = document.getElementsByClassName("visible_countdown");
+    let visible_countdown = document.getElementsByClassName("visible_countdown");
 
     for (let i = 0; i < visible_countdown.length; i++) {
         if(element.checked){
@@ -14,7 +14,7 @@ function toggle_countdown_visibility(element){
 
 //Countdown
 function toggle_stopwatch_visibility(element){
-    visible_countdown = document.getElementsByClassName("visible_stopwatch");
+    let visible_countdown = document.getElementsByClassName("visible_stopwatch");
 
     for (let i = 0; i < visible_countdown.length; i++) {
         if(element.checked){
@@ -30,8 +30,8 @@ function toggle_stopwatch_visibility(element){
 
 function toggle_show_when_question(){
 
-    checkbox_switch_questions =  document.getElementsByClassName("checkbox_switch_questions")[0];
-    show_when_question_switchs = document.getElementsByClassName("show_when_question_switch");
+    let checkbox_switch_questions = document.getElementsByClassName("checkbox_switch_questions")[0];
+    let show_when_question_switchs = document.getElementsByClassName("show_when_question_switch");
 
     for (let i = 0; i < show_when_question_switchs.length; i++) {
         if(checkbox_switch_questions.checked){
@@ -47,10 +47,10 @@ function toggle_show_when_question(){
 
 function toggle_show_when_round(){
 
-    checkbox_switch_rounds =  document.getElementsByClassName("checkbox_switch_rounds")[0];
-    checkbox_switch_questions =  document.getElementsByClassName("checkbox_switch_questions")[0];
-    show_when_rounds_switch = document.getElementsByClassName("show_when_rounds_switch");
-    show_when_rounds_switch_block = document.getElementsByClassName("show_when_rounds_switch_block")[0];
+    let checkbox_switch_rounds = document.getElementsByClassName("checkbox_switch_rounds")[0];
+    let checkbox_switch_questions = document.getElementsByClassName("checkbox_switch_questions")[0];
+    let show_when_rounds_switch = document.getElementsByClassName("show_when_rounds_switch");
+    let show_when_rounds_switch_block = document.getElementsByClassName("show_when_rounds_switch_block")[0];
     if (checkbox_switch_rounds.checked) {
         show_when_rounds_switch_block.style.display = "block"
     } else {
@@ -82,10 +82,10 @@ function set_answer_cb(clicked){
 }
 
 
-function save_settings(target){
+function save_settings(){
 
-    let nameHome = document.getElementsByClassName("nameHome")[0].value;
-    let nameGuest = document.getElementsByClassName("nameGuest")[0].value;
+    let name_home = document.getElementsByClassName("name_home")[0].value;
+    let name_guest = document.getElementsByClassName("name_guest")[0].value;
 
     // Get Title
     let title = document.getElementsByClassName("game_title")[0].children[0].value;
@@ -107,8 +107,8 @@ function save_settings(target){
     let stopwatch = document.getElementsByClassName("stopwatch_cb")[0].checked;
 
     let output_json = {}
-    output_json["nameHome"] = nameHome
-    output_json["nameGuest"] = nameGuest
+    output_json["name_home"] = name_home
+    output_json["name_guest"] = name_guest
     output_json["title"] = title
     output_json["game_number"] = game_number
     output_json["amount_of_games"] = amount_of_games
@@ -147,7 +147,7 @@ function save_settings(target){
     }
 
     console.log(document.getElementsByClassName("outer_class")[0].scrollTop)
-    var input = document.createElement("input");
+    let input = document.createElement("input");
     input.name = "return_value"
 
     input.value = JSON.stringify(output_json);
@@ -156,48 +156,47 @@ function save_settings(target){
 
 }
 
-function add_quesion(){
+function add_question(){
 
-    index = 0
-
-    var newDiv = document.createElement("div");
+    let index = 0
+    let newDiv = document.createElement("div");
     newDiv.classList.add("answer_" + index + "_div")
     newDiv.classList.add("answer_div")
-    var delete_quesion_button = document.createElement("button");
-    delete_quesion_button.classList.add("remove_answer")
-    delete_quesion_button.setAttribute("onclick", "delete_quesion('answer_"+index+"_div')")
-    delete_quesion_button.innerText = "-"
-    var quesion_input = document.createElement("input");
-    quesion_input.classList.add("answer_" + index)
-    quesion_input.classList.add("answer_input")
-    quesion_input.type = "text"
-    quesion_input.value = ""
-    var quesion_cb = document.createElement("input");
-    quesion_cb.classList.add("answer_cb_" + index)
-    quesion_cb.classList.add("answer_cb")
-    quesion_cb.type = "checkbox"
-    quesion_cb.setAttribute("onclick", "set_answer_cb(this)")
-    var break_element = document.createElement("br");
-    newDiv.appendChild(delete_quesion_button)
-    newDiv.appendChild(quesion_input)
-    newDiv.appendChild(quesion_cb)
+    let delete_question_button = document.createElement("button");
+    delete_question_button.classList.add("remove_answer")
+    delete_question_button.setAttribute("onclick", "delete_question('answer_"+index+"_div')")
+    delete_question_button.innerText = "-"
+    let question_input = document.createElement("input");
+    question_input.classList.add("answer_" + index)
+    question_input.classList.add("answer_input")
+    question_input.type = "text"
+    question_input.value = ""
+    let question_cb = document.createElement("input");
+    question_cb.classList.add("answer_cb_" + index)
+    question_cb.classList.add("answer_cb")
+    question_cb.type = "checkbox"
+    question_cb.setAttribute("onclick", "set_answer_cb(this)")
+    let break_element = document.createElement("br");
+    newDiv.appendChild(delete_question_button)
+    newDiv.appendChild(question_input)
+    newDiv.appendChild(question_cb)
     newDiv.appendChild(break_element)
     document.getElementsByClassName("answers_section")[0].appendChild(newDiv)
     restructure_index()
 }
 
-function delete_quesion(target){
+function delete_question(target){
     document.getElementsByClassName(target)[0].remove();
     restructure_index()
 }
 
 function restructure_index(){
-    div_list = document.getElementsByClassName("answer_div")
+    let div_list = document.getElementsByClassName("answer_div")
     for (let i = 0; i < div_list.length; i++) {
         let index = div_list[i].classList.item(1).replace("answer_", "").replace("_div", "")
         div_list[i].classList.remove("answer_" + index + "_div")
         div_list[i].classList.add("answer_" + i + "_div")
-        div_list[i].children[0].setAttribute("onclick", "delete_quesion('answer_"+i+"_div')")
+        div_list[i].children[0].setAttribute("onclick", "delete_question('answer_"+i+"_div')")
         div_list[i].children[1].classList.remove("answer_" + index)
         div_list[i].children[1].classList.add("answer_" + i)
         div_list[i].children[2].classList.remove("answer_cb_" + index)

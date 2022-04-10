@@ -20,10 +20,10 @@
                 {% else %}
                 <button class="minus_game">-</button>
                 {% endif %}
-                <a class="game_number">{{gameID+1}}</a>
+                <a class="game_number">{{gameID + 1}}</a>
 
-                {% if games_ammount > gameID+1%}
-                    <button onclick="location.href='/{{gameID+1}}/round/0'" class="plus_game">+</button>
+                {% if games_ammount > gameID + 1%}
+                    <button onclick="location.href='/{{gameID + 1}}/round/0'" class="plus_game">+</button>
                 {% else %}
                     <button class="plus_game">+</button>
                 {% endif %}
@@ -136,10 +136,10 @@
                     {% else %}
                     <button class="minus_round">-</button>
                     {% endif %}
-                    <a class="round_number">{{roundID+1}}</a>
+                    <a class="round_number">{{roundID + 1}}</a>
 
-                    {% if rounds_ammount > roundID+1%}
-                        <button onclick="location.href='/{{gameID}}/round/{{roundID+1}}'" class="plus_round">+</button>
+                    {% if rounds_ammount > roundID + 1%}
+                        <button onclick="location.href='/{{gameID}}/round/{{roundID + 1}}'" class="plus_round">+</button>
                     {% else %}
                         <button class="plus_round">+</button>
                     {% endif %}

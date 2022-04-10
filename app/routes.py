@@ -1,11 +1,12 @@
 import configparser
 import json
 import math
+import os
+from os.path import join
 
 from flask import render_template, redirect, url_for, request
 
 from app import app
-from app.Models.QuestionRound import QuestionRound
 from app.Models.Show import Show
 from app.utils import Werkzeuge
 
@@ -13,53 +14,73 @@ config = configparser.ConfigParser()
 config.read('.config')
 baseDir = config['DEFAULT']["baseDir"]
 
+
 @app.route('/')
 def index():
-    return redirect(url_for('game', gameID=0, roundID=0))
+    return redirect(url_for('game', game_id=0, round_id=0))
 
 
-@app.route('/<gameID>/round/<roundID>', methods=['GET'])
-def game(gameID, roundID):
-    gameID_int = int(gameID)
-    roundID_int = int(roundID)
+@app.route('/<game_id>/round/<round_id>', methods=['GET'])
+def game(game_id, round_id):
+    game_id_int = int(game_id)
+    round_id_int = int(round_id)
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show, game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, gameID_int)
-    Werkzeuge.write_to_dir_structure(baseDir, show)
+    temp_show, temp_game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, game_id_int)
+    Werkzeuge.write_to_dir_structure(baseDir, temp_show)
 
-    if game == [] and roundID_int != 0:
-        return redirect(url_for('game', gameID=gameID, roundID=0))
+    if temp_game == [] and round_id_int != 0:
+        return redirect(url_for('game', game_id=game_id, round_id=0))
 
     if len(rounds_list) <= 0:
         frage = []
     else:
-        frage = rounds_list[roundID_int]
+        frage = rounds_list[round_id_int]
 
-    game_score_0 = show.bonusPlayerHome
-    game_score_1 = show.bonusPlayerGuest
-    for x in range(len(show.games)):
-        if show.games[x].winner == 0:
-            game_score_0 += x+1
-        elif show.games[x].winner == 1:
-            game_score_1 += x+1
+    game_score_0, game_score_1, round_score_0, round_score_1, win_list, cw = get_current_winner(temp_show, temp_game)
 
+    minute = math.floor(temp_game.countdown / 60)
+    min_string = str(minute).zfill(2)
+    sec_string = str((temp_game.countdown-minute*60)).zfill(2)
+    return render_template('control_page.html', title='Game', gameID=game_id_int, roundID=round_id_int,
+                           titel=temp_game.title, desc=temp_game.description, rules=temp_game.rules,
+                           game_score_0=game_score_0, game_score_1=game_score_1, round_score_0=round_score_0,
+                           round_score_1=round_score_1, games_ammount=len(temp_show.games),
+                           rounds_ammount=len(rounds_list), win_list=win_list, frage=frage, current_winning=cw,
+                           bonusHome=temp_show.bonus_player_home, bonusGuest=temp_show.bonus_player_guest,
+                           playerHome=temp_show.player_home, playerGuest=temp_show.player_guest,
+                           stopwatch_enabled=temp_game.stopwatch_enabled, countdown_enabled=temp_game.countdown_enabled,
+                           countdown_min=min_string, countdown_sec=sec_string)
+
+
+@app.route('/file')
+def file():
+    games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
+    return games_json
+
+
+def get_current_winner(temp_show, temp_game):
+    game_score_0 = temp_show.bonus_player_home
+    game_score_1 = temp_show.bonus_player_guest
+    for x in range(len(temp_show.games)):
+        if temp_show.games[x].winner == 0:
+            game_score_0 += x + 1
+        elif temp_show.games[x].winner == 1:
+            game_score_1 += x + 1
     round_score_0 = 0
     round_score_1 = 0
-    if game != []:
-        for round in game.rounds:
-            if round.winner == 0:
-                round_score_0 += 1
-            elif round.winner == 1:
-                round_score_1 += 1
-
-    if round_score_0 > round_score_1:
-        cw = 0
-    elif round_score_0 < round_score_1:
+    for temp_round in temp_game.rounds:
+        if temp_round.winner == 0:
+            round_score_0 += 1
+        elif temp_round.winner == 1:
+            round_score_1 += 1
+    cw = 0
+    if round_score_0 < round_score_1:
         cw = 1
     elif round_score_0 == round_score_1:
         cw = -1
 
     win_list = [[], []]
-    for game_dummy in show.games:
+    for game_dummy in temp_show.games:
         if game_dummy.winner == -1:
             win_list[0].append(0)
             win_list[1].append(0)
@@ -69,34 +90,18 @@ def game(gameID, roundID):
         elif game_dummy.winner == 1:
             win_list[0].append(-1)
             win_list[1].append(1)
-    min_string = str(math.floor(game.countdown/60)).zfill(2)
-    min = math.floor(game.countdown/60)
-    sec_string = str((game.countdown-min*60)).zfill(2)
-    sec = str((game.countdown-min*60)).zfill(2)
-    return render_template('contol_page.html', title='Game', gameID=gameID_int,
-                            roundID=roundID_int, titel=game.title, desc=game.description, rules=game.rules,
-                            game_score_0=game_score_0, game_score_1=game_score_1, round_score_0=round_score_0,
-                            round_score_1=round_score_1, games_ammount=len(show.games),
-                            rounds_ammount=len(rounds_list), win_list=win_list,
-                            frage=frage, current_winning=cw, bonusHome=show.bonusPlayerHome,
-                            bonusGuest=show.bonusPlayerGuest, playerHome=show.playerHome, playerGuest=show.playerGuest,
-                            stopwatch_enabled=game.stopwatch_enabled, countdown_enabled=game.countdown_enabled,
-                            countdown_min=min_string, countdown_sec=sec_string)
+    return game_score_0, game_score_1, round_score_0, round_score_1, win_list, cw
 
 
-@app.route('/file')
-def file():
-    games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    return games_json
 @app.route('/game_score')
 def game_score():
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show = Show.readFromJson(games_json)
+    temp_show = Show.read_from_json(games_json)
     win_list = [[], []]
     player_guest_score = 0
     player_home_score = 0
     game_points = 1
-    for game_dummy in show.games:
+    for game_dummy in temp_show.games:
         if game_dummy.winner == -1:
             win_list[0].append(0)
             win_list[1].append(0)
@@ -111,156 +116,126 @@ def game_score():
         game_points += 1
 
     return render_template('score_page.html', title='Game', win_list=win_list, player_home_score=player_home_score,
-                           player_guest_score=player_guest_score, player_home_name=show.playerHome.upper(),
-                           player_guest_name=show.playerGuest.upper(), bonusHome=show.bonusPlayerHome,
-                           bonusGuest=show.bonusPlayerGuest)
+                           player_guest_score=player_guest_score, player_home_name=temp_show.playerHome,
+                           player_guest_name=temp_show.playerGuest, bonusHome=temp_show.bonusPlayerHome,
+                           bonusGuest=temp_show.bonusPlayerGuest)
 
 
-@app.route('/<gameID>/round/<roundID>/edit', methods=['GET'])
-def game_edit(gameID, roundID):
-    gameID_int = int(gameID)
-    roundID_int = int(roundID)
+@app.route('/<game_id>/round/<round_id>/edit', methods=['GET'])
+def game_edit(game_id, round_id):
+    game_id_int = int(game_id)
+    round_id_int = int(round_id)
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show, game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, gameID_int)
-    Werkzeuge.write_to_dir_structure(baseDir, show)
+    temp_show, temp_game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, game_id_int)
+    Werkzeuge.write_to_dir_structure(baseDir, temp_show)
 
     if len(rounds_list) <= 0:
-        norounds = True
+        no_rounds = True
     else:
-        norounds = False
+        no_rounds = False
 
-    if len(rounds_list) <= 0 or len(rounds_list[roundID_int]) <= 1:
-
+    if len(rounds_list) <= 0 or len(rounds_list[round_id_int]) <= 1:
         frage = [0, "frage", ["antwortA", "antwortB", "antwortC", "antwortD"], 2]
-        noquestion = True
-
+        no_question = True
     else:
-        frage = rounds_list[roundID_int]
-        noquestion = False
+        frage = rounds_list[round_id_int]
+        no_question = False
 
-    game_score_0 = show.bonusPlayerHome
-    game_score_1 = show.bonusPlayerGuest
-    for x in range(len(show.games)):
-        if show.games[x].winner == 0:
-            game_score_0 += x+1
-        elif show.games[x].winner == 1:
-            game_score_1 += x+1
+    game_score_0, game_score_1, round_score_0, round_score_1, win_list, cw = get_current_winner(temp_show, temp_game)
 
-    round_score_0 = 0
-    round_score_1 = 0
-    for round in game.rounds:
-        if round.winner == 0:
-            round_score_0 += 1
-        elif round.winner == 1:
-            round_score_1 += 1
-
-    if round_score_0 > round_score_1:
-        cw = 0
-    elif round_score_0 < round_score_1:
-        cw = 1
-    elif round_score_0 == round_score_1:
-        cw = -1
-
-    win_list = [[], []]
-    for game_dummy in show.games:
-        if game_dummy.winner == -1:
-            win_list[0].append(0)
-            win_list[1].append(0)
-        elif game_dummy.winner == 0:
-            win_list[0].append(1)
-            win_list[1].append(-1)
-        elif game_dummy.winner == 1:
-            win_list[0].append(-1)
-            win_list[1].append(1)
-
-    countdown = -1
-    if game.countdown == -1:
+    if temp_game.countdown == -1:
         countdown = 10
     else:
-        countdown = game.countdown
-    print("round_amount = ", len(game.rounds))
-    round_amount = len(game.rounds)
+        countdown = temp_game.countdown
+    round_amount = len(temp_game.rounds)
     if round_amount == 0:
         round_amount = 1
 
-    return render_template('contol_page_edit.html', title='Game', gameID=gameID_int,
-                            roundID=roundID_int, titel=game.title, desc=game.description, rules=game.rules,
-                            game_score_0=game_score_0, game_score_1=game_score_1, round_score_0=round_score_0,
-                            round_score_1=round_score_1, game_amount=len(show.games),
-                            round_amount=round_amount, win_list=win_list,
-                            frage=frage, current_winning=cw, bonusHome=show.bonusPlayerHome,
-                            bonusGuest=show.bonusPlayerGuest, playerHome=show.playerHome, playerGuest=show.playerGuest,
-                            stopwatch_enabled=game.stopwatch_enabled, countdown_enabled=game.countdown_enabled,
-                            countdown=countdown, noquestion=noquestion, norounds=norounds)
+    return render_template('control_page_edit.html', title='Game', gameID=game_id_int,
+                           roundID=round_id_int, titel=temp_game.title, desc=temp_game.description,
+                           rules=temp_game.rules, game_score_0=game_score_0, game_score_1=game_score_1,
+                           round_score_0=round_score_0, round_score_1=round_score_1, game_amount=len(temp_show.games),
+                           round_amount=round_amount, win_list=win_list, frage=frage, current_winning=cw,
+                           bonusHome=temp_show.bonus_player_home, bonusGuest=temp_show.bonus_player_guest,
+                           playerHome=temp_show.player_home, playerGuest=temp_show.player_guest,
+                           stopwatch_enabled=temp_game.stopwatch_enabled, countdown_enabled=temp_game.countdown_enabled,
+                           countdown=countdown, noquestion=no_question, norounds=no_rounds)
 
 
-@app.route('/<gameID>/round/<roundID>/questions', methods=['GET'])
-def questions(gameID, roundID):
-    gameID_int = int(gameID)
-    roundID_int = int(roundID)
+@app.route('/<game_id>/round/<round_id>/questions', methods=['GET'])
+def questions(game_id, round_id):
+    game_id_int = int(game_id)
+    round_id_int = int(round_id)
     games_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
-    show, game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, gameID_int)
+    temp_show, temp_game, rounds_list = Werkzeuge.get_rounds_as_list(games_json, game_id_int)
     question = ""
     answers = []
     correct = -1
-    if len(rounds_list)>roundID_int:
-        print(rounds_list[roundID_int])
-        if len(rounds_list[roundID_int]) > 1:
-            print("YEP")
-            Werkzeuge.write_to_dir_structure(baseDir, show)
-            question = rounds_list[roundID_int][1]
+    if len(rounds_list) > round_id_int:
+        if len(rounds_list[round_id_int]) > 1:
+            Werkzeuge.write_to_dir_structure(baseDir, temp_show)
+            question = rounds_list[round_id_int][1]
             answers = []
-            for i in range(len(rounds_list[roundID_int][2])):
-                answers.append([i, rounds_list[roundID_int][2][i]])
-            print(answers)
-            correct = rounds_list[roundID_int][3]
-    games_ammount = len(show.games)
-    round_ammount = len(rounds_list)
-    return render_template('question.html', question=question, answers=answers, gameID=gameID_int,
-                           roundID=roundID_int, games_ammount=games_ammount, round_ammount=round_ammount, correct=correct)
+            for i in range(len(rounds_list[round_id_int][2])):
+                answers.append([i, rounds_list[round_id_int][2][i]])
+            correct = rounds_list[round_id_int][3]
+    games_amount = len(temp_show.games)
+    round_amount = len(rounds_list)
+    return render_template('question.html', question=question, answers=answers, gameID=game_id_int,
+                           roundID=round_id_int, games_ammount=games_amount, round_ammount=round_amount,
+                           correct=correct)
 
 
-    pass
-
-    # buttons rounds and games
-    #
-
-
-@app.route('/<gameID>/round/<roundID>', methods=['POST'])
-def game_post(gameID, roundID):
+@app.route('/<game_id>/round/<round_id>', methods=['POST'])
+def game_post(game_id, round_id):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
     return_json = json.loads(request.form["return_value"])
-    if return_json["method"] == "cahage_game_winner":
+    if return_json["method"] == "change_game_winner":
         if show_json["games"][return_json["game"]]["winner"] == return_json["player"]:
             show_json["games"][return_json["game"]]["winner"] = -1
         else:
             show_json["games"][return_json["game"]]["winner"] = return_json["player"]
-    if return_json["method"] == "cahage_round_winner":
+    if return_json["method"] == "change_round_winner":
         if show_json["games"][return_json["game"]]["Rounds"][return_json["round"]]["winner"] == return_json["player"]:
             show_json["games"][return_json["game"]]["Rounds"][return_json["round"]]["winner"] = -1
         else:
             show_json["games"][return_json["game"]]["Rounds"][return_json["round"]]["winner"] = return_json["player"]
+
+        score_dir = join(baseDir, "Score")
+        if not os.path.isdir(score_dir):
+            os.mkdir(score_dir)
+
+        round_score_home = 0
+        round_score_guest = 0
+        rounds = show_json["games"][return_json["game"]]["Rounds"]
+        for temp_round in rounds:
+            if temp_round["winner"] == 0:
+                round_score_home += 1
+            elif temp_round["winner"] == 1:
+                round_score_guest += 1
+
+        Werkzeuge.write_line_to_file(score_dir, "Points.txt",
+                                     str(round_score_home) + " : " + str(round_score_guest))
+
     if return_json["method"] == "addBonus":
         if return_json["player"] == 0:
-            show_json["bonusPlayerHome"] += return_json["bonus"]
+            show_json["bonus_player_home"] += return_json["bonus"]
         elif return_json["player"] == 1:
-            show_json["bonusPlayerGuest"] += return_json["bonus"]
+            show_json["bonus_player_guest"] += return_json["bonus"]
 
     Werkzeuge.save_show(baseDir, "GameShow1.json", show_json)
-    show = Show.readFromJson(show_json)
+    show = Show.read_from_json(show_json)
     Werkzeuge.write_to_dir_structure(baseDir, show)
-    return redirect(url_for('game', gameID=gameID, roundID=roundID))
+    return redirect(url_for('game', game_id=game_id, round_id=round_id))
 
 
-@app.route('/<gameID>/round/<roundID>/edit', methods=['POST'])
-def game_edit_post(gameID, roundID):
+@app.route('/<game_id>/round/<round_id>/edit', methods=['POST'])
+def game_edit_post(game_id, round_id):
     show_json = Werkzeuge.load_games(baseDir, "GameShow1.json")
     return_json = json.loads(request.form["return_value"])
 
-    print(return_json)
-
-    show_json["playerHome"] = return_json["nameHome"]
-    show_json["playerGuest"] = return_json["nameGuest"]
+    show_json["player_home"] = return_json["name_home"]
+    show_json["player_guest"] = return_json["name_guest"]
 
     if len(show_json["games"]) < return_json["amount_of_games"]:
         for i in range(return_json["amount_of_games"]):
@@ -280,7 +255,6 @@ def game_edit_post(gameID, roundID):
                     }
                 )
     elif len(show_json["games"]) > return_json["amount_of_games"]:
-        print("shrink rounds")
         show_json["games"] = show_json["games"][:return_json["amount_of_games"]]
 
     current_game = show_json["games"][return_json["game_number"]]
@@ -291,7 +265,6 @@ def game_edit_post(gameID, roundID):
     current_game["Stopwatch"] = return_json["stopwatch"]
 
     if return_json["has_rounds"]:
-        print(return_json["amount_of_rounds"])
         if len(current_game["Rounds"]) < return_json["amount_of_rounds"]:
             for i in range(return_json["amount_of_rounds"]):
                 if len(current_game["Rounds"]) <= i:
@@ -316,7 +289,7 @@ def game_edit_post(gameID, roundID):
                                 "correct": 1
                             }
                         )
-            current_game["Questions"][int(roundID)] = {
+            current_game["Questions"][int(round_id)] = {
                 "question": return_json["frage"][0],
                 "content": return_json["frage"][1],
                 "correct": return_json["frage"][2],
@@ -326,9 +299,8 @@ def game_edit_post(gameID, roundID):
     else:
         current_game["Rounds"] = []
         current_game["Questions"] = []
-
     Werkzeuge.save_show(baseDir, "GameShow1.json", show_json)
 
-    show = Show.readFromJson(show_json)
+    show = Show.read_from_json(show_json)
     Werkzeuge.write_to_dir_structure(baseDir, show)
-    return redirect(url_for('game', gameID=gameID, roundID=roundID))
+    return redirect(url_for('game', game_id=game_id, round_id=round_id))

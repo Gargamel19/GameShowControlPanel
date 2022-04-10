@@ -39,9 +39,9 @@
         </div>
         <div class="panel stopwatch">
             <div class="head">
-                <input type="text" class="nameHome" style="width:calc(50% - 30px);" value="{{playerHome}}">
+                <input type="text" class="name_home" style="width:calc(50% - 30px);" value="{{playerHome}}">
                 <button>Reset</button>
-                <input type="text" class="nameGuest" style="width:calc(50% - 30px);" value="{{playerGuest}}">
+                <input type="text" class="name_guest" style="width:calc(50% - 30px);" value="{{playerGuest}}">
             </div>
 
             <div class="countdown row">
@@ -88,7 +88,7 @@
 
         <div class="panel runde">
 
-            {% if norounds %}
+            {% if no_rounds %}
                 <div style="display: flex;">
                     <input class="checkbox_switch checkbox_switch_rounds" onclick="toggle_show_when_round()" type="checkbox" role="switch">
                     <p class="panel_titel">Runde</p>
@@ -100,7 +100,7 @@
                 </div>
             {% endif %}
             <div class="panel_shown_text">
-                {% if norounds %}
+                {% if no_rounds %}
                     <div class="show_when_rounds_switch">
                         Rounds: <input class="amount_of_rounds show_when_rounds_switch" type="number" value="{{ round_amount }}">
                     </div>
@@ -114,8 +114,8 @@
 
         <div class="panel frage show_when_rounds_switch_block">
 
-            {% if noquestion %}
-                {% if noround %}
+            {% if no_question %}
+                {% if no_round %}
                     <div style="display: none;">
                 {% else %}
                     <div style="display: flex;">
@@ -140,7 +140,7 @@
             {% else %}
 
 
-                {% if noround %}
+                {% if no_round %}
                     <div style="display: none;">
                 {% else %}
                     <div style="display: flex;">
@@ -154,7 +154,7 @@
                     <div class="answers_section">
                     {% for x in range(frage[2]|length) %}
                         <div class="answer_div answer_{{ x }}_div">
-                            <button onclick="delete_quesion('answer_{{ x }}_div')" class="remove_answer">-</button>
+                            <button onclick="delete_question('answer_{{ x }}_div')" class="remove_answer">-</button>
                             <input type="text" class="answer_input answer_{{ x }}"  value="{{ frage[2][x] }} ">
                             {% if frage[3] == x %}
 
@@ -166,7 +166,7 @@
                         </div>
                     {% endfor %}
                     </div>
-                    <button onclick="add_quesion()" style="width: 100%; margin-top: 10px" class="add_answer">+</button>
+                    <button onclick="add_question()" style="width: 100%; margin-top: 10px" class="add_answer">+</button>
                 </div>
             {% endif %}
 

@@ -2,28 +2,28 @@ from app.Models.Game import Game
 
 
 class Show:
-    playerHome = ""
-    playerGuest = ""
-    bonusPlayerHome = 0
-    bonusPlayerGuest = 0
+    player_home = ""
+    player_guest = ""
+    bonus_player_home = 0
+    bonus_player_guest = 0
 
     games = []
 
-    def __init__(self, playerHome, playerGuest, bonusPlayerHome, bonusPlayerGuest, games):
-        self.playerHome = playerHome
-        self.playerGuest = playerGuest
-        self.bonusPlayerGuest = bonusPlayerGuest
-        self.bonusPlayerHome = bonusPlayerHome
+    def __init__(self, player_home, player_guest, bonus_player_home, bonus_player_guest, games):
+        self.player_home = player_home
+        self.player_guest = player_guest
+        self.bonus_player_guest = bonus_player_guest
+        self.bonus_player_home = bonus_player_home
         self.games = games
 
     @staticmethod
-    def readFromJson(json):
-        playerHome = json["playerHome"]
-        playerGuest = json["playerGuest"]
-        bonusPlayerHome = json["bonusPlayerHome"]
-        bonusPlayerGuest = json["bonusPlayerGuest"]
+    def read_from_json(json):
+        player_home = json["player_home"]
+        player_guest = json["player_guest"]
+        bonus_player_home = json["bonusPlayerHome"]
+        bonus_player_guest = json["bonusPlayerGuest"]
         games = []
         for game in json["games"]:
-            games.append(Game.readFromJson(game))
+            games.append(Game.read_from_json(game))
 
-        return Show(playerHome, playerGuest, bonusPlayerHome, bonusPlayerGuest, games)
+        return Show(player_home, player_guest, bonus_player_home, bonus_player_guest, games)

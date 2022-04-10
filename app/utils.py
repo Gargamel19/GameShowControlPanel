@@ -15,7 +15,6 @@ class Werkzeuge:
         with open(games_dir, "w+", encoding="utf-8") as file:
             file.writelines(json.dumps(show_json, indent=4, sort_keys=True))
 
-
     @staticmethod
     def load_games(base_dir, game_show_name):
         games_dir = join(base_dir, game_show_name)
@@ -30,7 +29,7 @@ class Werkzeuge:
 
     @staticmethod
     def get_rounds_as_list(questions_json, index):
-        show = Show.readFromJson(questions_json)
+        show = Show.read_from_json(questions_json)
 
         if len(show.games) == 0:
             return show, show.games[index], []
@@ -39,11 +38,11 @@ class Werkzeuge:
                 index = len(show.games)-1
             game = show.games[index]
             rounds = []
-            for round in game.rounds:
-                if type(round) is QuestionRound:
-                    rounds.append([round.winner, round.question, round.content, round.correct])
+            for temp_round in game.rounds:
+                if type(temp_round) is QuestionRound:
+                    rounds.append([temp_round.winner, temp_round.question, temp_round.content, temp_round.correct])
                 else:
-                    rounds.append([round.winner])
+                    rounds.append([temp_round.winner])
         return show, game, rounds
 
     @staticmethod
@@ -104,15 +103,14 @@ class Werkzeuge:
             player.append(home_name)
         return player
 
-
     @staticmethod
     def write_to_dir_structure(base_dir, show):
 
         # write name home
-        Werkzeuge.write_line_to_file(base_dir, "Name_Home.txt", show.playerHome)
+        Werkzeuge.write_line_to_file(base_dir, "Name_Home.txt", show.player_home)
 
         # write name guest
-        Werkzeuge.write_line_to_file(base_dir, "Name_Guest.txt", show.playerGuest)
+        Werkzeuge.write_line_to_file(base_dir, "Name_Guest.txt", show.player_guest)
 
         # create Games dir
         games_dir = join(base_dir, "Games")
@@ -124,8 +122,8 @@ class Werkzeuge:
         if not os.path.isdir(score_dir):
             os.mkdir(score_dir)
 
-        score_Home = show.bonusPlayerHome
-        score_Guest = show.bonusPlayerGuest
+        score_home = show.bonus_player_home
+        score_guest = show.bonus_player_guest
 
         for x in range(len(show.games)):
             # create "Game x" dir
@@ -147,21 +145,21 @@ class Werkzeuge:
 
             # Compute Score
             if show.games[x].winner == 0:
-                score_Home += x+1
+                score_home += x+1
             elif show.games[x].winner == 1:
-                score_Guest += x+1
+                score_guest += x+1
 
             # Compute Round Score
             round_score_home = 0
             round_score_home_str = ""
             round_score_guest = 0
             round_score_guest_str = ""
-            for round in show.games[x].rounds:
-                if round.winner == 0:
+            for temp_round in show.games[x].rounds:
+                if temp_round.winner == 0:
                     round_score_home += 1
                     round_score_home_str += ") "
                     round_score_guest_str += "( "
-                elif round.winner == 1:
+                elif temp_round.winner == 1:
                     round_score_guest += 1
                     round_score_home_str += "( "
                     round_score_guest_str += ") "
@@ -169,7 +167,8 @@ class Werkzeuge:
                     round_score_home_str += "! "
                     round_score_guest_str += "! "
 
-            Werkzeuge.write_line_to_file(score_game_dir, "Points.txt", str(round_score_home) + " : " + str(round_score_guest))
+            Werkzeuge.write_line_to_file(score_game_dir, "Points.txt", str(round_score_home) + " : " +
+                                         str(round_score_guest))
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Home.txt", str(round_score_home))
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Guest.txt", str(round_score_guest))
 
@@ -177,26 +176,24 @@ class Werkzeuge:
             Werkzeuge.write_line_to_file(score_game_dir, "Points_Guest_Display.txt", str(round_score_guest_str))
 
             if round_score_home > round_score_guest:
-                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerHome)
+                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.player_home)
             elif round_score_home < round_score_guest:
-                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.playerGuest)
+                Werkzeuge.write_line_to_file(score_game_dir, "Winner.txt", show.player_guest)
 
         # score home player
-        Werkzeuge.write_line_to_file(score_dir, "Score_Home.txt", str(score_Home))
+        Werkzeuge.write_line_to_file(score_dir, "Score_Home.txt", str(score_home))
 
         # score guest player
-        Werkzeuge.write_line_to_file(score_dir, "Score_Guest.txt", str(score_Guest))
-
-
+        Werkzeuge.write_line_to_file(score_dir, "Score_Guest.txt", str(score_guest))
 
     @staticmethod
-    def write_line_to_file(dir, file, content):
-        file_path = join(dir, file)
+    def write_line_to_file(directory, file, content):
+        file_path = join(directory, file)
         with open(file_path, 'w', encoding="utf-8") as f:
             f.write(content)
 
     @staticmethod
-    def write_lines_to_file(dir, file, content):
-        file_path = join(dir, file)
+    def write_lines_to_file(directory, file, content):
+        file_path = join(directory, file)
         with open(file_path, 'w', encoding="utf-8") as f:
             f.writelines(content)
