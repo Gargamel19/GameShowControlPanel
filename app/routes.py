@@ -116,9 +116,9 @@ def game_score():
         game_points += 1
 
     return render_template('score_page.html', title='Game', win_list=win_list, player_home_score=player_home_score,
-                           player_guest_score=player_guest_score, player_home_name=temp_show.playerHome,
-                           player_guest_name=temp_show.playerGuest, bonusHome=temp_show.bonusPlayerHome,
-                           bonusGuest=temp_show.bonusPlayerGuest)
+                           player_guest_score=player_guest_score, player_home_name=temp_show.player_home,
+                           player_guest_name=temp_show.player_guest, bonusHome=temp_show.bonus_player_home,
+                           bonusGuest=temp_show.bonus_player_guest)
 
 
 @app.route('/<game_id>/round/<round_id>/edit', methods=['GET'])
