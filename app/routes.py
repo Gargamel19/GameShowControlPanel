@@ -48,8 +48,8 @@ def game(game_id, round_id):
                            rounds_ammount=len(rounds_list), win_list=win_list, frage=frage, current_winning=cw,
                            bonusHome=temp_show.bonus_player_home, bonusGuest=temp_show.bonus_player_guest,
                            playerHome=temp_show.player_home, playerGuest=temp_show.player_guest,
-                           stopwatch_enabled=temp_game.stopwatch_enabled, countdown_enabled=temp_game.countdown_enabled,
-                           countdown_min=min_string, countdown_sec=sec_string)
+                           countdown_enabled=temp_game.countdown_enabled, countdown_min=min_string,
+                           countdown_sec=sec_string)
 
 
 @app.route('/file')
@@ -158,8 +158,8 @@ def game_edit(game_id, round_id):
                            round_amount=round_amount, win_list=win_list, frage=frage, current_winning=cw,
                            bonusHome=temp_show.bonus_player_home, bonusGuest=temp_show.bonus_player_guest,
                            playerHome=temp_show.player_home, playerGuest=temp_show.player_guest,
-                           stopwatch_enabled=temp_game.stopwatch_enabled, countdown_enabled=temp_game.countdown_enabled,
-                           countdown=countdown, noquestion=no_question, norounds=no_rounds)
+                           countdown_enabled=temp_game.countdown_enabled, countdown=countdown, noquestion=no_question,
+                           norounds=no_rounds)
 
 
 @app.route('/<game_id>/round/<round_id>/questions', methods=['GET'])
@@ -246,7 +246,6 @@ def game_edit_post(game_id, round_id):
                         "Description": "desc.",
                         "Rules": "Regeln",
                         "Countdown": -1,
-                        "Stopwatch": False,
                         "CurrentRound": 0,
                         "Rounds": [],
                         "ScoreHome": 0,
@@ -262,7 +261,6 @@ def game_edit_post(game_id, round_id):
     current_game["Description"] = return_json["description"]
     current_game["Rules"] = return_json["rules"]
     current_game["Countdown"] = return_json["countdown_value"]
-    current_game["Stopwatch"] = return_json["stopwatch"]
 
     if return_json["has_rounds"]:
         if len(current_game["Rounds"]) < return_json["amount_of_rounds"]:

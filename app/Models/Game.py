@@ -8,21 +8,19 @@ class Game:
     rules = ""
     countdown_enabled = False
     countdown = 0
-    stopwatch_enabled = False
     current_round = 0
     rounds = []
     scoreHome = 0
     scoreGuest = 0
     winner = -1
 
-    def __init__(self, title, description, rules, countdown, stopwatch, current_round, rounds, score_home, score_guest,
+    def __init__(self, title, description, rules, countdown, current_round, rounds, score_home, score_guest,
                  winner):
         self.winner = winner
         self.scoreHome = score_home
         self.scoreGuest = score_guest
         self.current_round = current_round
         self.rounds = rounds
-        self.stopwatch_enabled = stopwatch
         self.countdown_enabled = countdown >= 0
         self.countdown = countdown
         self.rules = rules
@@ -35,7 +33,6 @@ class Game:
         desc = json["Description"]
         rules = json["Rules"]
         countdown = json["Countdown"]
-        stopwatch = json["Stopwatch"]
         current_round = json["CurrentRound"]
         rounds_json = json["Rounds"]
         if "Questions" in json:
@@ -52,4 +49,4 @@ class Game:
         score_home = json["ScoreHome"]
         score_guest = json["ScoreGuest"]
         winner = json["winner"]
-        return Game(title, desc, rules, countdown, stopwatch, current_round, rounds, score_home, score_guest, winner)
+        return Game(title, desc, rules, countdown, current_round, rounds, score_home, score_guest, winner)

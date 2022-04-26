@@ -9,224 +9,33 @@
     <title>{{ titel }}</title>
 </head>
 <body>
-
-    <div class="outer_class">
-
-        <header>
-            <div class="game_title">{{ titel }}</div>
-            <div class="game_control">
-                {% if gameID > 0 %}
-                <button onclick="location.href='/{{gameID-1}}/round/0'" class="minus_game">-</button>
-                {% else %}
-                <button class="minus_game">-</button>
-                {% endif %}
-                <a class="game_number">{{gameID + 1}}</a>
-
-                {% if games_ammount > gameID + 1%}
-                    <button onclick="location.href='/{{gameID + 1}}/round/0'" class="plus_game">+</button>
-                {% else %}
-                    <button class="plus_game">+</button>
-                {% endif %}
-            </div>
-        </header>
-        <div id="header_spacer">
-        </div>
-        <div class="panel beschreibung">
-            <div class="panel_titel" onclick="toggle_desc()">
-                Beschreibung
-            </div>
-            <div class="panel_sub_text description_panel_text">
-                {{ desc }}
-            </div>
-        </div>
-        <div class="panel regeln">
-            <div class="panel_titel" onclick="toggle_rules()">
-                Regeln
-            </div>
-            <div class="panel_sub_text rules_panel_text">
-                {{ rules }}
-            </div>
-        </div>
-        <div class="panel stopwatch">
-            <div class="head">
-                <div>{{playerHome}}</div>
-                <button>Reset</button>
-                <div>{{playerGuest}}</div>
-            </div>
-            {% if countdown_enabled %}
-            <div class="countdown row">
-                <div style="width: 60%; float: left">
-                    <div>Countdown</div>
-                </div>
-                <div style="width: 10%" class="input">
-                    <input id="countdown_min" type="text" value="{{countdown_min}}" style="width:100%">
-                </div>
-                <div style="width: 10%" class="input">
-                    <input id="countdown_sec" type="text" value="{{countdown_sec}}" style="width:100%">
-                </div>
-                <div style="width: 10%;">
-                    <button id="countdown_start_stop" class="unloaded" onclick="countdown_start_stop()" style="float: right">Start</button>
-                </div>
-                <div style="width: 10%">
-                    <button onclick="countdown.clear()" style="float: right">Reset</button>
-                </div>
-            </div>
-            <div class="timer">
-                <a id="countdown_minuten">{{ countdown_min }}</a>:<a id="countdown_sekunden">{{ countdown_sec }}</a>:<a id="countdown_msekunden">00</a>
-            </div>
+    <header>
+        <div class="game_title">{{ titel }}</div>
+        <div class="game_control">
+            {% if gameID > 0 %}
+            <button onclick="location.href='/{{gameID-1}}/round/0'" class="minus_game">-</button>
+            {% else %}
+            <button class="minus_game">-</button>
             {% endif %}
-            {% if stopwatch_enabled %}
-            <div class="stopwatch row">
-                <div style="width: 50%; float: left">
-                    <div>Stopwatch</div>
-                </div>
-                <div style="width: 20%">
-                </div>
-                <div style="width: 15%;">
-                    <button id="stopwatch_start_stop" onclick="stopwatch_start_stop();" style="float: right">Start</button>
-                </div>
-                <div style="width: 15%">
-                    <button style="float: right" onclick="stoppuhr.clear()">Reset</button>
-                </div>
-            </div>
-            <div class="timer">
-                <a id="stopwatch_minuten">00</a>:<a id="stopwatch_sekunden">00</a>:<a id="stopwatch_msekunden">00</a>
-            </div>
+            <a class="game_number">{{gameID + 1}}</a>
+
+            {% if games_ammount > gameID + 1%}
+                <button onclick="location.href='/{{gameID + 1}}/round/0'" class="plus_game">+</button>
+            {% else %}
+                <button class="plus_game">+</button>
             {% endif %}
         </div>
-        {% if frage|length > 0%}
-            {% if frage|length > 1%}
-                <div class="panel frage">
-                    <div class="panel_titel">
-                        Frage
-                    </div>
-                    <div class="panel_shown_text">
-                        <h3>{{frage[1]}}</h3>
-                        {% for antwort in frage[2] %}
-                            {% if frage[2][frage[3]] == antwort %}
-                                <div style="height: 0em" class="right_answer">{{ antwort }}</div>  <br>
-                            {% else %}
-                                <div style="height: 0em">{{ antwort }}</div>  <br>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <button onclick="show_answer()" class="row">Antwort</button>
-                    <div class="panel_text answer_panel_text panel_hidden_text">
-                        {{ frage[2][frage[3]] }}
-                    </div>
-                </div>
-            {% endif %}
-        <div class="panel runde">
-            {% if current_winning == -1 %}
-            <div class="head">
-            {% elif current_winning == 0 %}
-            <div class="head win_left">
-            {% elif current_winning == 1 %}
-            <div class="head win_right">
-            {% endif %}
-                <div class="round_title">Runde</div>
-                <div class="row score_runde">
-                    <div class="round_score_player_0">{{round_score_0}}</div>
-                    <div style="margin-left: 5px; margin-right: 5px"> - </div>
-                    <div class="round_score_player_1">{{round_score_1}}</div>
-                </div>
-                <div class="round_control">
-                    {% if roundID > 0 %}
-                    <button onclick="location.href='/{{gameID}}/round/{{roundID-1}}'" class="minus_round">-</button>
-                    {% else %}
-                    <button class="minus_round">-</button>
-                    {% endif %}
-                    <a class="round_number">{{roundID + 1}}</a>
-
-                    {% if rounds_ammount > roundID + 1%}
-                        <button onclick="location.href='/{{gameID}}/round/{{roundID + 1}}'" class="plus_round">+</button>
-                    {% else %}
-                        <button class="plus_round">+</button>
-                    {% endif %}
-                </div>
-            </div>
-
-        <form method="post">
-            <div class="row round_score">
-                {% if frage[0] == 0 %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 winner_player_button">{{ playerHome }}</button>
-                    <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 looser_player_button">{{ playerGuest }}</button>
-                {% elif frage[0] == 1  %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0 looser_player_button">{{ playerHome }}</button>
-                    <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1 winner_player_button">{{ playerGuest }}</button>
-                {% else %}
-                    <button name="0_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 0, {{round_score_0}}, {{round_score_1}})" class="round_player_button_0">{{ playerHome }}</button>
-                    <div>Punkt für</div>
-                    <button name="1_won_round" onclick="select_round_as_won({{gameID}}, {{roundID}}, 1, {{round_score_0}}, {{round_score_1}})" class="round_player_button_1">{{ playerGuest }}</button>
-                {% endif %}
-            </div>
-        </form>
+    </header>
+    <div style="display: flex; flex-wrap: nowrap">
+        <div style="width: 50%">
+            {% include 'controll_unit.html' %}
         </div>
-        {% endif %}
-        <form method="post">
-            <div class="panel score">
-                <div class="row">
-                    <div class="score_player">
-                        <div class="score_sum_player0">{{game_score_0}}</div>
-                        <div class="games">
-                            {% for i in range(win_list[0]|length) %}
-
-                                {% if win_list[0][i] == 1 %}
-                                    <button onclick="select_game_as_won(0, {{ i }})" class="game_button selected_game_button button_player_0_{{ i }}">
-                                        {{ i + 1 }}
-                                    </button>
-                                {% elif win_list[0][i] == -1 %}
-                                    <button onclick="select_game_as_won(0, {{ i }})" class="game_button deselected_game_button button_player_0_{{ i }}">
-                                        {{ i + 1 }}
-                                    </button>
-                                {% elif win_list[0][i] == 0  %}
-                                    <button onclick="select_game_as_won(0, {{ i }})" class="game_button button_player_0_{{ i }}">
-                                        {{ i + 1 }}
-                                    </button>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <div class="row">
-                            <button onclick="inc_bonus(0, -1)" class="minus_bonus_0">-</button>
-                            <a class="bonus_score bonus_ammount_0">{{bonusHome}}</a>
-                            <button onclick="inc_bonus(0, 1)" class="plus_bonus_0">+</button>
-                        </div>
-                    </div>
-                    <div style="display: none" class="row">
-                        <button onclick="reset_gamescore()" class="reset_score_button">Reset</button>
-                    </div>
-                    <div class="score_player">
-                        <div class="score_sum_player1">{{game_score_1}}</div>
-
-                            <div class="games">
-                                {% for i in range(win_list[0]|length) %}
-                                    {% if win_list[1][i] == 1 %}
-                                        <button onclick="select_game_as_won(1, {{ i }})" class="game_button selected_game_button button_player_1_{{ i }}">
-                                            {{ i + 1 }}
-                                        </button>
-                                    {% elif win_list[1][i] == -1 %}
-                                        <button onclick="select_game_as_won(1, {{ i }})" class="game_button deselected_game_button button_player_1_{{ i }}">
-                                            {{ i + 1 }}
-                                        </button>
-                                    {% elif win_list[1][i] == 0  %}
-                                        <button onclick="select_game_as_won(1, {{ i }})" class="game_button button_player_1_{{ i }}">
-                                            {{ i + 1 }}
-                                        </button>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        <div class="row">
-                            <button onclick="inc_bonus(1, -1)" class="minus_bonus_1">-</button>
-                            <a class="bonus_score bonus_ammount_1">{{bonusGuest}}</a>
-                            <button onclick="inc_bonus(1, 1)" class="plus_bonus_1">+</button>
-                        </div>
-                    </div>
-                </div>
+        <div style="width: 50%">
+            <div class="panel frage">
+            {% include 'question.html' %}
             </div>
-        </form>
-        <button onclick="location.href='/{{gameID}}/round/{{roundID}}/edit'" >edit</button>
+        </div>
     </div>
+
 </body>
 </html>

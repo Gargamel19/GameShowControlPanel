@@ -20,8 +20,8 @@ class Show:
     def read_from_json(json):
         player_home = json["player_home"]
         player_guest = json["player_guest"]
-        bonus_player_home = json["bonusPlayerHome"]
-        bonus_player_guest = json["bonusPlayerGuest"]
+        bonus_player_home = json["bonus_player_home"]
+        bonus_player_guest = json["bonus_player_guest"]
         games = []
         for game in json["games"]:
             games.append(Game.read_from_json(game))

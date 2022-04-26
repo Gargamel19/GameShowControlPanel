@@ -114,6 +114,10 @@ input[type=text]{
 }
 
 .timer{
+    font-size: 60px;
+}
+
+.timer{
     text-align: center;
 }
 
@@ -130,19 +134,21 @@ input[type=text]{
 
 }
 
-button{
-    background: rgb(61,61,61);
+button:not(.answer, .round_player_button, .game_button, .answer_question) {
+    background: rgb(61, 61, 61);
     background: linear-gradient(0deg, rgba(61,61,61,1) 0%, rgba(38,38,38,1) 100%);
     color: #d2d2d2;
+}
+button{
     border: 1px solid #707070;
     border-radius: 5px;
 }
-button:hover {
+button:hover:not(.answer, .round_player_button, .game_button, .answer_question) {
     background: rgb(83,83,83);
     background: linear-gradient(0deg, rgba(83,83,83,1) 0%, rgba(46,46,46,1) 100%);
     color: white;
 }
-button:active {
+button:active:not(.answer, .round_player_button, .game_button, .answer_question) {
     background: rgb(29, 29, 29);
     background: linear-gradient(0deg, rgba(29, 29, 29, 1) 0%, rgba(39, 39, 39, 1) 100%);
 }

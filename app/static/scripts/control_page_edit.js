@@ -12,20 +12,6 @@ function toggle_countdown_visibility(element){
 
 }
 
-//Countdown
-function toggle_stopwatch_visibility(element){
-    let visible_countdown = document.getElementsByClassName("visible_stopwatch");
-
-    for (let i = 0; i < visible_countdown.length; i++) {
-        if(element.checked){
-            visible_countdown[i].style.display = "block"
-        }else{
-            visible_countdown[i].style.display = "none"
-        }
-    }
-
-}
-
 // Frage
 
 function toggle_show_when_question(){
@@ -104,8 +90,6 @@ function save_settings(){
         countdown_value = parseInt(document.getElementsByClassName("countdown_value_input")[0].value);
     }
 
-    let stopwatch = document.getElementsByClassName("stopwatch_cb")[0].checked;
-
     let output_json = {}
     output_json["name_home"] = name_home
     output_json["name_guest"] = name_guest
@@ -115,7 +99,6 @@ function save_settings(){
     output_json["description"] = description
     output_json["rules"] = rules
     output_json["countdown_value"] = countdown_value
-    output_json["stopwatch"] = stopwatch
 
     if(document.getElementsByClassName("checkbox_switch_rounds")[0].checked){
         output_json["has_rounds"] = true

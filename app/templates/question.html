@@ -7,56 +7,23 @@
     <title>Quesions</title>
 </head>
 <body>
-    <header>
-        <div class="controll_section">
-            <div class="game_control">
-                Game:<br>
-                {% if gameID > 0 %}
-                    <button onclick="location.href='/{{gameID-1}}/round/0/questions'" class="minus_game">-</button>
-                {% else %}
-                    <button class="minus_game">-</button>
-                {% endif %}
-                <a class="game_number">{{gameID + 1}}</a>
 
-                {% if games_ammount > gameID + 1%}
-                    <button onclick="location.href='/{{gameID + 1}}/round/0/questions'" class="plus_game">+</button>
-                {% else %}
-                    <button class="plus_game">+</button>
-                {% endif %}
-            </div>
-            <div class="round_control">
-                Round:<br>
-                {% if roundID > 0 %}
-                    <button onclick="location.href='/{{gameID}}/round/{{roundID - 1}}/questions'" class="minus_round">-</button>
-                {% else %}
-                    <button class="minus_round">-</button>
-                {% endif %}
-                    <a class="round_number">{{roundID + 1}}</a>
-
-                {% if round_ammount > roundID + 1%}
-                    <button onclick="location.href='/{{gameID}}/round/{{roundID + 1}}/questions'" class="plus_round">+</button>
-                {% else %}
-                    <button class="plus_round">+</button>
-                {% endif %}
-                </div>
-        </div>
-        <button onclick="aufloesen({{ correct }})" class="aufloesen">Get Answer</button>
-    </header>
-
-
+    <div id="header_spacer">
+    </div>
+    <button onclick="aufloesen({{ frage[3] }})" class="aufloesen">Get Answer</button>
 
     <div class="question_answer_section">
         <div class="question_section">
-            <h1>{{ question }}</h1>
+            <h1>{{ frage[1] }}</h1>
         </div>
         <div class="answers_section">
 
 
-            {% for answer in answers %}
-                {% if answers|length <= 1 %}
-                    <button style="display: none" onclick="antwort_auswahl({{answer[0]}})" id="answer_{{answer[0]}}" class="answer right_answer">{{ answer[1] }}</button>
+            {% for x in range(frage[2]|length) %}
+                {% if frage[2]|length <= 1 %}
+                    <button style="display: none" onclick="antwort_auswahl({{x}})" id="answer_{{x}}" class="answer_question right_answer_question">{{ frage[2][x] }}</button>
                 {% else %}
-                    <button onclick="antwort_auswahl({{answer[0]}})" id="answer_{{answer[0]}}" class="answer">{{ answer[1] }}</button>
+                    <button onclick="antwort_auswahl({{x}})" id="answer_{{x}}" class="answer_question">{{ frage[2][x] }}</button>
                 {% endif %}
             {% endfor %}
         </div>
